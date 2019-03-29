@@ -1,0 +1,21 @@
+let s:devx = {
+      \    'name': 'devx',
+      \    'top':
+      \    {
+      \      'bot':
+      \      {
+      \        'init': ['call termopen("cd ~/Code/ && devx sync", {"detach": 0})'],
+      \        'sz': 6
+      \      },
+      \    }
+      \  }
+
+let s:tdd = {
+      \    'name': 'tdd',
+      \    'bot':
+      \    {
+      \      'init': ['call termopen("zsh", {"detach": 0})'],
+      \    },
+      \  }
+
+let g:vwm#layouts = [s:devx, s:tdd]
