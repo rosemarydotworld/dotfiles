@@ -12,24 +12,24 @@ endfunction
 
 " Modes with better names
 let g:currentmode={
-  \ 'n'      : 'NORMAL ',
-  \ 'no'     : 'NORMAL·OP ',
-  \ 'v'      : 'VISUAL ',
-  \ 'V'      : 'V·LINE ',
-  \ '\<C-V>' : 'V·BLOCK ',
-  \ 's'      : 'SELECT ',
-  \ 'S'      : 'S·LINE ',
-  \ '\<C-S>' : 'S·BLOCK ',
-  \ 'i'      : 'INSERT ',
-  \ 'R'      : 'REPLACE ',
-  \ 'Rv'     : 'V·REPLACE ',
-  \ 'c'      : 'COMMAND ',
-  \ 'cv'     : 'VIM EX ',
-  \ 'ce'     : 'EX ',
-  \ 'r'      : 'PROMPT ',
-  \ 'rm'     : 'MORE ',
-  \ 'r?'     : 'CONFIRM ',
-  \ '!'      : 'SHELL ',
+  \ 'n'      : 'NORMAL',
+  \ 'no'     : 'NORMAL·OP',
+  \ 'v'      : 'VISUAL',
+  \ 'V'      : 'V·LINE',
+  \ '\<C-V>' : 'V·BLOCK',
+  \ 's'      : 'SELECT',
+  \ 'S'      : 'S·LINE',
+  \ '\<C-S>' : 'S·BLOCK',
+  \ 'i'      : 'INSERT',
+  \ 'R'      : 'REPLACE',
+  \ 'Rv'     : 'V·REPLACE',
+  \ 'c'      : 'COMMAND',
+  \ 'cv'     : 'VIM EX',
+  \ 'ce'     : 'EX',
+  \ 'r'      : 'PROMPT',
+  \ 'rm'     : 'MORE',
+  \ 'r?'     : 'CONFIRM',
+  \ '!'      : 'SHELL',
   \ 't'      : 'TERMINAL '
   \}
 
@@ -67,7 +67,7 @@ set laststatus=2
 set statusline=
 set statusline+=%{ChangeStatuslineColor()}
 set statusline+=\ %{PrintMode()}
-set statusline+=%2*\ %l/%L:%c                " line + column number
+set statusline+=\ %2*\ %l/%L:%c              " line + column number
 set statusline+=%4*\ %{LinterStatus()}       " ALE <3
 set statusline+=%1*%=
 set statusline+=%3*%m                        " modified flag

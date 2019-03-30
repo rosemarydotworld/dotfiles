@@ -123,6 +123,101 @@ let g:Lf_DefaultMode = 'FullPath'
 let g:Lf_ShortcutB = '<C-B>'
 " No separators for LeaderF
 let g:Lf_StlSeparator = { 'left': '', 'right': '' }
+" I don't need that big of a window
+let g:Lf_WindowHeight = 0.3
+" LeaderF colorscheme
+let g:Lf_StlPalette = {
+            \   'stlName': {
+            \       'gui': 'bold',
+            \       'font': 'NONE',
+            \       'guifg': '#607080',
+            \       'guibg': '#242B38',
+            \       'cterm': 'bold',
+            \       'ctermfg': '22',
+            \       'ctermbg': '157'
+            \   },
+            \   'stlCategory': {
+            \       'gui': 'NONE',
+            \       'font': 'NONE',
+            \       'guifg': '#607080',
+            \       'guibg': '#242B38',
+            \       'cterm': 'NONE',
+            \       'ctermfg': '16',
+            \       'ctermbg': '210'
+            \   },
+            \   'stlNameOnlyMode': {
+            \       'gui': 'NONE',
+            \       'font': 'NONE',
+            \       'guifg': '#607080',
+            \       'guibg': '#242B38',
+            \       'cterm': 'NONE',
+            \       'ctermfg': '16',
+            \       'ctermbg': '227'
+            \   },
+            \   'stlFullPathMode': {
+            \       'gui': 'NONE',
+            \       'font': 'NONE',
+            \       'guifg': '#607080',
+            \       'guibg': '#242B38',
+            \       'cterm': 'NONE',
+            \       'ctermfg': '16',
+            \       'ctermbg': '147'
+            \   },
+            \   'stlFuzzyMode': {
+            \       'gui': 'NONE',
+            \       'font': 'NONE',
+            \       'guifg': '#607080',
+            \       'guibg': '#242B38',
+            \       'cterm': 'NONE',
+            \       'ctermfg': '16',
+            \       'ctermbg': '227'
+            \   },
+            \   'stlRegexMode': {
+            \       'gui': 'NONE',
+            \       'font': 'NONE',
+            \       'guifg': '#607080',
+            \       'guibg': '#242B38',
+            \       'cterm': 'NONE',
+            \       'ctermfg': '16',
+            \       'ctermbg': '121'
+            \   },
+            \   'stlCwd': {
+            \       'gui': 'NONE',
+            \       'font': 'NONE',
+            \       'guifg': '#607080',
+            \       'guibg': '#242B38',
+            \       'cterm': 'NONE',
+            \       'ctermfg': '195',
+            \       'ctermbg': '241'
+            \   },
+            \   'stlBlank': {
+            \       'gui': 'NONE',
+            \       'font': 'NONE',
+            \       'guifg': 'NONE',
+            \       'guibg': '#242B38',
+            \       'cterm': 'NONE',
+            \       'ctermfg': 'NONE',
+            \       'ctermbg': '237'
+            \   },
+            \   'stlLineInfo': {
+            \       'gui': 'NONE',
+            \       'font': 'NONE',
+            \       'guifg': '#607080',
+            \       'guibg': '#242B38',
+            \       'cterm': 'NONE',
+            \       'ctermfg': '16',
+            \       'ctermbg': '195'
+            \   },
+            \   'stlTotal': {
+            \       'gui': 'NONE',
+            \       'font': 'NONE',
+            \       'guifg': '#607080',
+            \       'guibg': '#242B38',
+            \       'cterm': 'NONE',
+            \       'ctermfg': '16',
+            \       'ctermbg': '149'
+            \   }
+\ }
 
 " Stop asking me about local vimrc
 let g:localvimrc_persistent = 2
