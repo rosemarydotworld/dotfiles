@@ -4,7 +4,7 @@ function! LinterStatus() abort
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
   return l:counts.total == 0 ? '' : printf(
-  \ '⌦  W:%d E:%d ',
+  \ '✗ W:%d E:%d ',
   \ l:all_non_errors,
   \ l:all_errors
   \)
@@ -71,4 +71,4 @@ set statusline+=\ %2*\ %l/%L:%c              " line + column number
 set statusline+=%4*\ %{LinterStatus()}       " ALE <3
 set statusline+=%1*%=
 set statusline+=%3*%m                        " modified flag
-set statusline+=%1*\ %F\                     " full path to file
+set statusline+=%1*\ %f\                     " full path to file
