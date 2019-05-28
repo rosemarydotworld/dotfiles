@@ -125,6 +125,8 @@ let g:Lf_DefaultMode = 'FullPath'
 let g:Lf_ShortcutB = '<C-B>'
 " No separators for LeaderF
 let g:Lf_StlSeparator = { 'left': '', 'right': '' }
+" Refresh my cache a lot to deal with new files
+let g:Lf_UseCache = 0
 " I don't need that big of a window
 let g:Lf_WindowHeight = 0.3
 " LeaderF colorscheme
