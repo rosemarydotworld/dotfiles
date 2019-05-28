@@ -33,7 +33,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'chaoren/vim-wordmotion'
 Plug 'sheerun/vim-polyglot'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'mileszs/ack.vim'
 Plug 'embear/vim-localvimrc'
 Plug 'ayu-theme/ayu-vim'
@@ -41,8 +40,8 @@ Plug 'desmap/ale-sensible' | Plug 'w0rp/ale'
 Plug 'ap/vim-buftabline'
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+  Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+  Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 endif
 
 call plug#end()
