@@ -104,6 +104,8 @@ set hidden
 " Buffer switching is fast as hell
 nnoremap <C-l> :bnext<CR>
 nnoremap <C-h> :bprev<CR>
+" Close buffers quickly
+nnoremap <C-x> :bd!<CR>
 " BufTabLine settings
 let g:buftabline_show = 1
 " BufTabLine colors
