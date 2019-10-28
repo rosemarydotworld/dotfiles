@@ -33,14 +33,8 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-let ayucolor="mirage"
-colorscheme ayu
+colorscheme srcery
 set background=dark
-
-" Custom statusline; I am the worst
-if filereadable(expand("~/.vimrc.line"))
-  source ~/.vimrc.line
-endif
 
 filetype plugin indent on
 
@@ -74,6 +68,9 @@ highlight Comment cterm=italic
 " Use one space, not two, after punctuation.
 set nojoinspaces
 
+" always show signcolumns
+set signcolumn=yes
+
 " Numbers
 set number
 set relativenumber
@@ -93,11 +90,16 @@ set splitright
 " Better escaping from terminals
 tnoremap <ESC><ESC> <C-\><C-n>
 
-" Manually fix every god damned thing
-nmap <leader>F <Plug>(ale_fix)
-" Jump between ale complaints quickly
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" Manually fix every god damned thing with :Format
+command! -nargs=0 Format :call CocAction('format')
+nnoremap <Leader>f :Format<CR>
+nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
+
+" Find symbol of current document
+nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 
 " Buffers can stay 'open' if not in a window
 set hidden
@@ -106,122 +108,52 @@ nnoremap <C-l> :bnext<CR>
 nnoremap <C-h> :bprev<CR>
 " Close buffers quickly
 nnoremap <C-x> :bd!<CR>
-" BufTabLine settings
-let g:buftabline_show = 1
-" BufTabLine colors
-hi BufTabLineFill guibg=#3D4759
-hi BufTabLineActive guibg=#3D4759
-hi BufTabLineHidden guibg=#3D4759
+
+" Airline
+" use tabline all the time
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'jsformatter'
+" remove the rightmost filetype info / line number etc.
+let g:airline_section_x = ''
+let g:airline_section_y = ''
+let g:airline_section_z = ''
+" don't collapse so much
+let g:airline_inactive_collapse=0
+" use short modes
+let g:airline_mode_map = {
+    \ '__'     : '-',
+    \ 'c'      : 'C',
+    \ 'i'      : 'I',
+    \ 'ic'     : 'I',
+    \ 'ix'     : 'I',
+    \ 'n'      : 'N',
+    \ 'multi'  : 'M',
+    \ 'ni'     : 'N',
+    \ 'no'     : 'N',
+    \ 'R'      : 'R',
+    \ 'Rv'     : 'R',
+    \ 's'      : 'S',
+    \ 'S'      : 'S',
+    \ 't'      : 'T',
+    \ 'v'      : 'V',
+    \ 'V'      : 'V',
+    \ }
 
 " Autocomplete
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Fuzzy file search
-let g:Lf_ShortcutF = '<C-P>'
-" Full path search by default
-let g:Lf_DefaultMode = 'FullPath'
+nnoremap <C-P> :Clap files<CR>
 " Fuzzy buffer search
-let g:Lf_ShortcutB = '<C-B>'
-" No separators for LeaderF
-let g:Lf_StlSeparator = { 'left': '', 'right': '' }
-" Refresh my cache a lot to deal with new files
-let g:Lf_UseCache = 0
-" I don't need that big of a window
-let g:Lf_WindowHeight = 0.3
-" LeaderF colorscheme
-let g:Lf_StlPalette = {
-            \   'stlName': {
-            \       'gui': 'bold',
-            \       'font': 'NONE',
-            \       'guifg': '#607080',
-            \       'guibg': '#242B38',
-            \       'cterm': 'bold',
-            \       'ctermfg': '22',
-            \       'ctermbg': '157'
-            \   },
-            \   'stlCategory': {
-            \       'gui': 'NONE',
-            \       'font': 'NONE',
-            \       'guifg': '#607080',
-            \       'guibg': '#242B38',
-            \       'cterm': 'NONE',
-            \       'ctermfg': '16',
-            \       'ctermbg': '210'
-            \   },
-            \   'stlNameOnlyMode': {
-            \       'gui': 'NONE',
-            \       'font': 'NONE',
-            \       'guifg': '#607080',
-            \       'guibg': '#242B38',
-            \       'cterm': 'NONE',
-            \       'ctermfg': '16',
-            \       'ctermbg': '227'
-            \   },
-            \   'stlFullPathMode': {
-            \       'gui': 'NONE',
-            \       'font': 'NONE',
-            \       'guifg': '#607080',
-            \       'guibg': '#242B38',
-            \       'cterm': 'NONE',
-            \       'ctermfg': '16',
-            \       'ctermbg': '147'
-            \   },
-            \   'stlFuzzyMode': {
-            \       'gui': 'NONE',
-            \       'font': 'NONE',
-            \       'guifg': '#607080',
-            \       'guibg': '#242B38',
-            \       'cterm': 'NONE',
-            \       'ctermfg': '16',
-            \       'ctermbg': '227'
-            \   },
-            \   'stlRegexMode': {
-            \       'gui': 'NONE',
-            \       'font': 'NONE',
-            \       'guifg': '#607080',
-            \       'guibg': '#242B38',
-            \       'cterm': 'NONE',
-            \       'ctermfg': '16',
-            \       'ctermbg': '121'
-            \   },
-            \   'stlCwd': {
-            \       'gui': 'NONE',
-            \       'font': 'NONE',
-            \       'guifg': '#607080',
-            \       'guibg': '#242B38',
-            \       'cterm': 'NONE',
-            \       'ctermfg': '195',
-            \       'ctermbg': '241'
-            \   },
-            \   'stlBlank': {
-            \       'gui': 'NONE',
-            \       'font': 'NONE',
-            \       'guifg': 'NONE',
-            \       'guibg': '#242B38',
-            \       'cterm': 'NONE',
-            \       'ctermfg': 'NONE',
-            \       'ctermbg': '237'
-            \   },
-            \   'stlLineInfo': {
-            \       'gui': 'NONE',
-            \       'font': 'NONE',
-            \       'guifg': '#607080',
-            \       'guibg': '#242B38',
-            \       'cterm': 'NONE',
-            \       'ctermfg': '16',
-            \       'ctermbg': '195'
-            \   },
-            \   'stlTotal': {
-            \       'gui': 'NONE',
-            \       'font': 'NONE',
-            \       'guifg': '#607080',
-            \       'guibg': '#242B38',
-            \       'cterm': 'NONE',
-            \       'ctermfg': '16',
-            \       'ctermbg': '149'
-            \   }
-\ }
+nnoremap <C-B> :Clap buffers<CR>
+" Yank list
+nnoremap <C-Y> :Clap yanks<CR>
+" Grep!
+nnoremap <C-G> :Clap grep<CR>
+
+" Fuzzy file search
+let g:Lf_ShortcutF = '<C-P>'
 
 " Stop asking me about local vimrc
 let g:localvimrc_persistent = 2

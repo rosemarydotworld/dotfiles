@@ -35,4 +35,6 @@
 [user]
   name = Liam Campbell
   email = hi@liamcampbell.info
-	team = @Patreon/creator-experience
+	team = @Patreon/mx
+[rerere]
+	enabled = true

@@ -27,21 +27,16 @@ com! -nargs=+  -bar Bundle call VundleToPlug("Bundle", <args>)
 call plug#begin('~/.vim/bundle')
 
 " Define bundles via Github repos
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'liuchengxu/vim-clap'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mileszs/ack.vim'
+Plug 'srcery-colors/srcery-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'chaoren/vim-wordmotion'
 Plug 'sheerun/vim-polyglot'
-Plug 'mileszs/ack.vim'
 Plug 'embear/vim-localvimrc'
-Plug 'ayu-theme/ayu-vim'
-Plug 'desmap/ale-sensible' | Plug 'w0rp/ale'
-Plug 'ap/vim-buftabline'
-
-if has('nvim')
-  Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-  Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-endif
+Plug 'vim-airline/vim-airline'
 
 call plug#end()
