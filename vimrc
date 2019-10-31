@@ -33,18 +33,10 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme srcery
+colorscheme quantum
 set background=dark
 
 filetype plugin indent on
-
-" Use 'ag' for searching
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-" Don't jump to the first result
-cnoreabbrev Ack Ack!
-nnoremap <Leader>A :Ack!<Space>
 
 autocmd BufWritePre * %s/\s\+$//e
 
@@ -90,6 +82,30 @@ set splitright
 " Better escaping from terminals
 tnoremap <ESC><ESC> <C-\><C-n>
 
+" Buffers can stay 'open' if not in a window
+set hidden
+" Buffer switching is fast as hell
+nnoremap <C-l> :bnext<CR>
+nnoremap <C-h> :bprev<CR>
+
+" Set spellfile to location that is guaranteed to exist, can be symlinked to
+" Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
+set spellfile=$HOME/.vim-spell-en.utf-8.add
+
+" Language Specific
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+" Use lua highlighting for pico8 cartridges
+au BufNewFile,BufRead *.p8 set filetype=lua
+
+" PLUGIN STUFF
+
+" Bbye
+" Close buffers quickly
+nnoremap <C-x> :Bdelete<CR>
+
+" Coc
 " Manually fix every god damned thing with :Format
 command! -nargs=0 Format :call CocAction('format')
 nnoremap <Leader>f :Format<CR>
@@ -100,14 +116,6 @@ nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-
-" Buffers can stay 'open' if not in a window
-set hidden
-" Buffer switching is fast as hell
-nnoremap <C-l> :bnext<CR>
-nnoremap <C-h> :bprev<CR>
-" Close buffers quickly
-nnoremap <C-x> :bd!<CR>
 
 " Airline
 " use tabline all the time
@@ -139,10 +147,11 @@ let g:airline_mode_map = {
     \ 'V'      : 'V',
     \ }
 
-" Autocomplete
+" Deoplete
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
+" Clap 👏
 " Fuzzy file search
 nnoremap <C-P> :Clap files<CR>
 " Fuzzy buffer search
@@ -152,19 +161,6 @@ nnoremap <C-Y> :Clap yanks<CR>
 " Grep!
 nnoremap <C-G> :Clap grep<CR>
 
-" Fuzzy file search
-let g:Lf_ShortcutF = '<C-P>'
-
+" Localvimrc
 " Stop asking me about local vimrc
 let g:localvimrc_persistent = 2
-
-" Set spellfile to location that is guaranteed to exist, can be symlinked to
-" Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
-set spellfile=$HOME/.vim-spell-en.utf-8.add
-
-" Language Specific
-" Treat <li> and <p> tags like the block tags they are
-let g:html_indent_tags = 'li\|p'
-
-" Use lua highlighting for pico8 cartridges
-au BufNewFile,BufRead *.p8 set filetype=lua
