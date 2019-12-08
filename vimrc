@@ -33,7 +33,7 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme quantum
+colorscheme one
 set background=dark
 
 filetype plugin indent on
@@ -72,9 +72,6 @@ augroup toggle_relative_number
 autocmd InsertEnter * :setlocal norelativenumber
 autocmd InsertLeave * :setlocal relativenumber
 
-" Switch between the last two files
-nnoremap <leader><leader> <c-^>
-
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
@@ -88,11 +85,23 @@ set hidden
 nnoremap <C-l> :bnext<CR>
 nnoremap <C-h> :bprev<CR>
 
+" FUN WITH LEADER COMMANDS
+
+" Quick timestamp for logs etc.
+nnoremap <leader>d :put =strftime('%FT%T%z')<CR>
+
+" Let me get to Explore/netrw faster
+nnoremap <leader>e :Explore<CR>
+
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
+
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 
-" Language Specific
+" LANGUAGE SPECIFIC
+
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 

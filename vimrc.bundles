@@ -4,17 +4,29 @@ end
 
 call plug#begin('~/.vim/bundle')
 
-" Define bundles via Github repos
+" All-purpose modal fuzzy finding
 Plug 'liuchengxu/vim-clap'
+" LSP support for linting, typing, suggestions, etc.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'tyrannicaltoucan/vim-quantum'
+" Status line
 Plug 'vim-airline/vim-airline'
+" Git tools
 Plug 'tpope/vim-fugitive'
+" Allow some extra things to repeat with `.`
 Plug 'tpope/vim-repeat'
+" Use `S` to surround objects with e.g. quotes
 Plug 'tpope/vim-surround'
+" Respect CamelCase etc. when moving by word
 Plug 'chaoren/vim-wordmotion'
+" Language support
 Plug 'sheerun/vim-polyglot'
+" Local editor rules
 Plug 'embear/vim-localvimrc'
+" Easier dismissal of buffers
 Plug 'moll/vim-bbye'
+" Colorscheme
+Plug 'rakr/vim-one'
+" Nice netrw
+Plug 'tpope/vim-vinegar'
 
 call plug#end()
