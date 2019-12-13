@@ -28,5 +28,9 @@ Plug 'moll/vim-bbye'
 Plug 'rakr/vim-one'
 " Nice netrw
 Plug 'tpope/vim-vinegar'
+" Python formatting
+Plug 'psf/black'
+" Python import sorting
+Plug 'fisadev/vim-isort'
 
 call plug#end()

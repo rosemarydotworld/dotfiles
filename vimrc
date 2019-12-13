@@ -102,6 +102,11 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 
 " LANGUAGE SPECIFIC
 
+" Run Black and import sorter when saving py files
+let g:black_linelength = 120
+autocmd BufWritePre *.py execute ':Black'
+autocmd BufWritePre *.py execute ':Isort'
+
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
