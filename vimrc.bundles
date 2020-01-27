@@ -32,5 +32,9 @@ Plug 'tpope/vim-vinegar'
 Plug 'psf/black'
 " Python import sorting
 Plug 'fisadev/vim-isort'
+" Allow for dispatching my browser
+Plug 'tyru/open-browser.vim'
+" Open current file in github repo
+Plug 'tyru/open-browser-github.vim'
 
 call plug#end()

@@ -122,7 +122,7 @@ nnoremap <C-x> :Bdelete<CR>
 " Coc
 " Manually fix every god damned thing with :Format
 command! -nargs=0 Format :call CocAction('format')
-nnoremap <Leader>f :Format<CR>
+nnoremap <leader>f :Format<CR>
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 
@@ -174,6 +174,10 @@ nnoremap <C-B> :Clap buffers<CR>
 nnoremap <C-Y> :Clap yanks<CR>
 " Grep!
 nnoremap <C-G> :Clap grep<CR>
+
+" Open-Browser-Github
+let g:openbrowser_github_always_used_branch = 'master'
+nnoremap <leader>g :OpenGithubFile<CR>
 
 " Localvimrc
 " Stop asking me about local vimrc
