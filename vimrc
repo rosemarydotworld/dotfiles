@@ -117,7 +117,7 @@ au BufNewFile,BufRead *.p8 set filetype=lua
 
 " Bbye
 " Close buffers quickly
-nnoremap <C-x> :Bdelete<CR>
+nnoremap <C-x> :Bdelete!<CR>
 
 " Coc
 " Manually fix every god damned thing with :Format
@@ -174,6 +174,10 @@ nnoremap <C-B> :Clap buffers<CR>
 nnoremap <C-Y> :Clap yanks<CR>
 " Grep!
 nnoremap <C-G> :Clap grep<CR>
+" Bigger clap window
+let g:clap_layout = { 'relative': 'editor' }
+" Fun empty message
+let g:clap_no_matches_msg = 'no dice'
 
 " Open-Browser-Github
 let g:openbrowser_github_always_used_branch = 'master'
