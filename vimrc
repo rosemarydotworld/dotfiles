@@ -132,9 +132,6 @@ nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 
 " Airline
-" use tabline all the time
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'jsformatter'
 " remove the rightmost filetype info / line number etc.
 let g:airline_section_x = ''
 let g:airline_section_y = ''
