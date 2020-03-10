@@ -127,9 +127,9 @@ nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 
 " Find symbol of current document
-nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <C-O>  :<C-u>CocList outline<cr>
 " Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <C-A>  :<C-u>CocList diagnostics<cr>
 
 " Airline
 " remove the rightmost filetype info / line number etc.
@@ -171,10 +171,14 @@ nnoremap <C-B> :Clap buffers<CR>
 nnoremap <C-Y> :Clap yanks<CR>
 " Grep!
 nnoremap <C-G> :Clap grep<CR>
+" Marks list
+nnoremap <C-M> :Clap marks<CR>
 " Bigger clap window
 let g:clap_layout = { 'relative': 'editor' }
 " Fun empty message
 let g:clap_no_matches_msg = 'no dice'
+" Insert only!
+let g:clap_insert_mode_only = v:true
 
 " Open-Browser-Github
 let g:openbrowser_github_always_used_branch = 'master'
