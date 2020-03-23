@@ -176,6 +176,8 @@ nnoremap <C-G> :Clap grep<CR>
 nnoremap <C-M> :Clap marks<CR>
 " Bigger clap window
 let g:clap_layout = { 'relative': 'editor' }
+" Clap theme
+let g:clap_theme = 'material_design_dark'
 " Fun empty message
 let g:clap_no_matches_msg = 'no dice'
 " Insert only!
