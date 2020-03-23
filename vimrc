@@ -33,8 +33,9 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme one
+colorscheme palenight
 set background=dark
+let g:airline_theme = "palenight"
 
 filetype plugin indent on
 

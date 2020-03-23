@@ -28,6 +28,7 @@ Plug 'embear/vim-localvimrc'
 Plug 'moll/vim-bbye'
 " Colorscheme
 Plug 'rakr/vim-one'
+Plug 'drewtempelmeyer/palenight.vim'
 " Nice netrw
 Plug 'tpope/vim-vinegar'
 " Python formatting
@@ -38,5 +39,13 @@ Plug 'fisadev/vim-isort'
 Plug 'tyru/open-browser.vim'
 " Open current file in github repo
 Plug 'tyru/open-browser-github.vim'
+" Use '%' for more stuff
+Plug 'andymass/vim-matchup'
+" Git gutter, essentially
+if has('nvim') || has('patch-8.0.902')
+  Plug 'mhinz/vim-signify'
+else
+  Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+endif
 
 call plug#end()
