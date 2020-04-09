@@ -1,0 +1,19 @@
+version: "1.0"
+tabs:
+  devx-and-files:
+    title: "Hello Caller"
+    panes:
+      - position: "1/1"
+        commands:
+          - "cd ~/Code/hellocaller"
+          - "git pull"
+          - "./setup.sh"
+          - "./start.sh"
+      - position: "1/2"
+        commands:
+          - "cd ~/Code/hellocaller"
+          - "npm run dev"
+      - position: "2/1"
+        commands:
+          - "cd ~/Code/hellocaller"
+          - "vim"
