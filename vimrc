@@ -76,6 +76,7 @@ autocmd InsertLeave * :setlocal relativenumber
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
+set fillchars=vert:┃
 
 " Better escaping from terminals
 tnoremap <ESC><ESC> <C-\><C-n>
