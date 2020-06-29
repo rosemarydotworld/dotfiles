@@ -2,7 +2,7 @@ if &compatible
   set nocompatible
 end
 
-call plug#begin('~/.vim/bundle')
+call plug#begin()
 
 " All-purpose modal fuzzy finding
 Plug 'liuchengxu/vim-clap'
@@ -27,12 +27,11 @@ Plug 'embear/vim-localvimrc'
 " Easier dismissal of buffers
 Plug 'moll/vim-bbye'
 " Colorscheme
-Plug 'rakr/vim-one'
-Plug 'drewtempelmeyer/palenight.vim'
+Plug 'dracula/vim', { 'name': 'dracula' }
 " Nice netrw
 Plug 'tpope/vim-vinegar'
-" Python formatting
-Plug 'psf/black'
+" Use editorconfig
+Plug 'editorconfig/editorconfig-vim'
 " Python import sorting
 Plug 'fisadev/vim-isort'
 " Allow for dispatching my browser

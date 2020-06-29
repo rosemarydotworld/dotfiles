@@ -33,9 +33,8 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme palenight
+colorscheme dracula
 set background=dark
-let g:airline_theme = "palenight"
 
 filetype plugin indent on
 
@@ -125,10 +124,21 @@ nnoremap <C-x> :Bdelete!<CR>
 " Manually fix every god damned thing with :Format
 command! -nargs=0 Format :call CocAction('format')
 nnoremap <leader>f :Format<CR>
+" Jump to problems
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
+" Type definition
+nnoremap <silent> K :call CocAction('doHover')<CR>
+" More goto actions
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gr <Plug>(coc-references)
+" Code actions
+nmap <leader>do <Plug>(coc-codeaction)
+" Rename a symbol
+nmap <leader>rn <Plug>(coc-rename)
 
-" Find symbol of current document
+" Show / fuzzy search symbols
 nnoremap <silent> <C-O>  :<C-u>CocList outline<cr>
 " Show all diagnostics
 nnoremap <silent> <C-A>  :<C-u>CocList diagnostics<cr>
