@@ -29,7 +29,7 @@ alias tl='tmux list-sessions'
 alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
 
-alias ll="exa -hl"
+alias ll="exa -hl --color=never"
 
 # DING
 alias ding='tput bel'

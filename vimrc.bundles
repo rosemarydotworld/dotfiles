@@ -10,6 +10,7 @@ Plug 'liuchengxu/vim-clap'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Status line
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " Comment stuff out
 Plug 'tpope/vim-commentary'
 " Git tools
@@ -26,8 +27,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'embear/vim-localvimrc'
 " Easier dismissal of buffers
 Plug 'moll/vim-bbye'
-" Colorscheme
-Plug 'dracula/vim', { 'name': 'dracula' }
+" Colorschemes
+Plug 'zaki/zazen'
 " Nice netrw
 Plug 'tpope/vim-vinegar'
 " Use editorconfig
@@ -46,5 +47,7 @@ if has('nvim') || has('patch-8.0.902')
 else
   Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
 endif
+" Sidebar file explorer (a sometimes food)
+Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 
 call plug#end()

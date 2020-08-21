@@ -6,8 +6,6 @@ set nobackup
 set nowritebackup
 set noswapfile        " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
 set history=50
-set ruler             " show the cursor position all the time
-set cursorline
 set showcmd           " display incomplete commands
 set incsearch         " do incremental searching
 set nohlsearch        " no search highlighting
@@ -33,8 +31,7 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme dracula
-set background=dark
+colorscheme zazen
 
 filetype plugin indent on
 
@@ -103,11 +100,6 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 
 " LANGUAGE SPECIFIC
 
-" Run Black and import sorter when saving py files
-let g:black_linelength = 120
-autocmd BufWritePre *.py execute ':Black'
-autocmd BufWritePre *.py execute ':Isort'
-
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
@@ -120,10 +112,12 @@ au BufNewFile,BufRead *.p8 set filetype=lua
 " Close buffers quickly
 nnoremap <C-x> :Bdelete!<CR>
 
+" Airline
+let g:airline_theme='minimalist'
+
 " Coc
 " Manually fix every god damned thing with :Format
-command! -nargs=0 Format :call CocAction('format')
-nnoremap <leader>f :Format<CR>
+nnoremap <leader>f :CocCommand eslint.executeAutofix<CR>
 " Jump to problems
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
@@ -143,33 +137,6 @@ nnoremap <silent> <C-O>  :<C-u>CocList outline<cr>
 " Show all diagnostics
 nnoremap <silent> <C-A>  :<C-u>CocList diagnostics<cr>
 
-" Airline
-" remove the rightmost filetype info / line number etc.
-let g:airline_section_x = ''
-let g:airline_section_y = ''
-let g:airline_section_z = ''
-" don't collapse so much
-let g:airline_inactive_collapse=0
-" use short modes
-let g:airline_mode_map = {
-    \ '__'     : '-',
-    \ 'c'      : 'C',
-    \ 'i'      : 'I',
-    \ 'ic'     : 'I',
-    \ 'ix'     : 'I',
-    \ 'n'      : 'N',
-    \ 'multi'  : 'M',
-    \ 'ni'     : 'N',
-    \ 'no'     : 'N',
-    \ 'R'      : 'R',
-    \ 'Rv'     : 'R',
-    \ 's'      : 'S',
-    \ 'S'      : 'S',
-    \ 't'      : 'T',
-    \ 'v'      : 'V',
-    \ 'V'      : 'V',
-    \ }
-
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -187,16 +154,26 @@ nnoremap <C-G> :Clap grep<CR>
 nnoremap <C-M> :Clap marks<CR>
 " Bigger clap window
 let g:clap_layout = { 'relative': 'editor' }
-" Clap theme
-let g:clap_theme = 'material_design_dark'
 " Fun empty message
 let g:clap_no_matches_msg = 'no dice'
 " Insert only!
 let g:clap_insert_mode_only = v:true
+let g:clap_theme = {
+    \ 'preview': { 'guibg': '#111111' },
+    \ 'input': { 'guibg': '#232323' },
+    \ 'search_text': { 'guibg': '#232323' },
+    \ 'display': { 'guibg': '#232323' },
+    \ 'spinner': { 'guibg': '#232323' },
+    \ 'selected': { 'guibg': '#333333', 'gui': 'bold,underline' },
+    \ 'current_selection': { 'guibg': '#333333', 'gui': 'bold' },
+    \ }
 
 " Open-Browser-Github
 let g:openbrowser_github_always_used_branch = 'master'
 nnoremap <leader>g :OpenGithubFile<CR>
+
+" CHADTree
+nnoremap <leader>v <cmd>CHADopen<CR>
 
 " Localvimrc
 " Stop asking me about local vimrc
