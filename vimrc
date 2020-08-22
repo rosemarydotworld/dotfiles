@@ -31,7 +31,7 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme zazen
+colorscheme zendo
 
 filetype plugin indent on
 
@@ -62,17 +62,10 @@ set signcolumn=yes
 
 " Numbers
 set number
-set relativenumber
-set numberwidth=5
-" Use relative line numbers except in Insert mode
-augroup toggle_relative_number
-autocmd InsertEnter * :setlocal norelativenumber
-autocmd InsertLeave * :setlocal relativenumber
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
-set fillchars=vert:┃
 
 " Better escaping from terminals
 tnoremap <ESC><ESC> <C-\><C-n>
@@ -108,12 +101,14 @@ au BufNewFile,BufRead *.p8 set filetype=lua
 
 " PLUGIN STUFF
 
+" Lightline
+let g:lightline = {
+  \ 'colorscheme': '16color',
+  \ }
+
 " Bbye
 " Close buffers quickly
 nnoremap <C-x> :Bdelete!<CR>
-
-" Airline
-let g:airline_theme='minimalist'
 
 " Coc
 " Manually fix every god damned thing with :Format
@@ -160,12 +155,14 @@ let g:clap_no_matches_msg = 'no dice'
 let g:clap_insert_mode_only = v:true
 let g:clap_theme = {
     \ 'preview': { 'guibg': '#111111' },
-    \ 'input': { 'guibg': '#232323' },
-    \ 'search_text': { 'guibg': '#232323' },
-    \ 'display': { 'guibg': '#232323' },
-    \ 'spinner': { 'guibg': '#232323' },
-    \ 'selected': { 'guibg': '#333333', 'gui': 'bold,underline' },
-    \ 'current_selection': { 'guibg': '#333333', 'gui': 'bold' },
+    \ 'input': { 'guibg': '#111111' },
+    \ 'search_text': { 'guibg': '#111111' },
+    \ 'display': { 'guibg': '#111111' },
+    \ 'spinner': { 'guibg': '#111111', 'gui': 'bold' },
+    \ 'selected': { 'guibg': '#111111', 'gui': 'bold,underline' },
+    \ 'current_selection': { 'guibg': '#111111', 'gui': 'bold' },
+    \ 'selected_sign': { 'guifg': '#ff9955' },
+    \ 'current_selection_sign': { 'guifg': '#ff9955' },
     \ }
 
 " Open-Browser-Github

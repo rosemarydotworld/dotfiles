@@ -9,8 +9,7 @@ Plug 'liuchengxu/vim-clap'
 " LSP support for linting, typing, suggestions, etc.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Status line
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 " Comment stuff out
 Plug 'tpope/vim-commentary'
 " Git tools
@@ -29,6 +28,7 @@ Plug 'embear/vim-localvimrc'
 Plug 'moll/vim-bbye'
 " Colorschemes
 Plug 'zaki/zazen'
+Plug 'liamdanger/zendo'
 " Nice netrw
 Plug 'tpope/vim-vinegar'
 " Use editorconfig
