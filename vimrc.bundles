@@ -12,26 +12,26 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim'
 " Comment stuff out
 Plug 'tpope/vim-commentary'
-" Git tools
-Plug 'tpope/vim-fugitive'
 " Allow some extra things to repeat with `.`
 Plug 'tpope/vim-repeat'
 " Use `S` to surround objects with e.g. quotes
 Plug 'tpope/vim-surround'
+" Nice netrw
+Plug 'tpope/vim-vinegar'
 " Respect CamelCase etc. when moving by word
 Plug 'chaoren/vim-wordmotion'
 " Language support
 Plug 'sheerun/vim-polyglot'
-" Local editor rules
-Plug 'embear/vim-localvimrc'
+" Git integration
+Plug 'lambdalisue/gina.vim'
 " Easier dismissal of buffers
 Plug 'moll/vim-bbye'
 " Colorschemes
 Plug 'liamdanger/zendo'
-" Nice netrw
-Plug 'tpope/vim-vinegar'
-" Use editorconfig
+" Use editorconfig on specific projects
 Plug 'editorconfig/editorconfig-vim'
+" Local editor rules (just for me)
+Plug 'embear/vim-localvimrc'
 " Python import sorting
 Plug 'fisadev/vim-isort'
 " Allow for dispatching my browser
@@ -46,7 +46,5 @@ if has('nvim') || has('patch-8.0.902')
 else
   Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
 endif
-" Sidebar file explorer (a sometimes food)
-Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 
 call plug#end()
