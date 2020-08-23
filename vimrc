@@ -78,6 +78,9 @@ nnoremap <C-h> :bprev<CR>
 
 " FUN WITH LEADER COMMANDS
 
+" Reload vimrc
+nnoremap <Leader>vr :source ~/.vimrc<CR>
+
 " Quick timestamp for logs etc.
 nnoremap <leader>d :put =strftime('%FT%T%z')<CR>
 
@@ -103,7 +106,7 @@ au BufNewFile,BufRead *.p8 set filetype=lua
 
 " Lightline
 let g:lightline = {
-  \ 'colorscheme': '16color',
+  \ 'colorscheme': 'zendo',
   \ }
 
 " Bbye
@@ -153,17 +156,6 @@ let g:clap_layout = { 'relative': 'editor' }
 let g:clap_no_matches_msg = 'no dice'
 " Insert only!
 let g:clap_insert_mode_only = v:true
-let g:clap_theme = {
-    \ 'preview': { 'guibg': '#111111' },
-    \ 'input': { 'guibg': '#111111' },
-    \ 'search_text': { 'guibg': '#111111' },
-    \ 'display': { 'guibg': '#111111' },
-    \ 'spinner': { 'guibg': '#111111', 'gui': 'bold' },
-    \ 'selected': { 'guibg': '#111111', 'gui': 'bold,underline' },
-    \ 'current_selection': { 'guibg': '#111111', 'gui': 'bold' },
-    \ 'selected_sign': { 'guifg': '#ff9955' },
-    \ 'current_selection_sign': { 'guifg': '#ff9955' },
-    \ }
 
 " Open-Browser-Github
 let g:openbrowser_github_always_used_branch = 'master'

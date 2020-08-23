@@ -27,7 +27,6 @@ Plug 'embear/vim-localvimrc'
 " Easier dismissal of buffers
 Plug 'moll/vim-bbye'
 " Colorschemes
-Plug 'zaki/zazen'
 Plug 'liamdanger/zendo'
 " Nice netrw
 Plug 'tpope/vim-vinegar'
