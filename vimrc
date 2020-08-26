@@ -8,10 +8,8 @@ set noswapfile        " http://robots.thoughtbot.com/post/18739402579/global-git
 set history=50
 set showcmd           " display incomplete commands
 set incsearch         " do incremental searching
-set nohlsearch        " no search highlighting
 set laststatus=2      " Always display the status line
 set autowrite         " Automatically :write before running commands
-set showmode          " Show the current mode
 set mouse=nicr        " scroll with the mouse if i feel like it
 set nowrap            " don't wrap
 set undofile          " Maintain undo history between sessions
@@ -76,6 +74,8 @@ set hidden
 nnoremap <C-l> :bnext<CR>
 nnoremap <C-h> :bprev<CR>
 
+nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
+
 " FUN WITH LEADER COMMANDS
 
 " Reload vimrc
@@ -109,6 +109,17 @@ let g:lightline = {
   \ 'colorscheme': 'zendo',
   \ }
 
+" Incsearch
+" :h g:incsearch#auto_nohlsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
 " Bbye
 " Close buffers quickly
 nnoremap <C-x> :Bdelete!<CR>
@@ -135,10 +146,6 @@ nnoremap <silent> <C-O>  :<C-u>CocList outline<cr>
 " Show all diagnostics
 nnoremap <silent> <C-A>  :<C-u>CocList diagnostics<cr>
 
-" Deoplete
-let g:deoplete#enable_at_startup = 1
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
 " Clap 👏
 " Fuzzy file search
 nnoremap <C-P> :Clap files<CR>
@@ -160,9 +167,6 @@ let g:clap_insert_mode_only = v:true
 " Open-Browser-Github
 let g:openbrowser_github_always_used_branch = 'master'
 nnoremap <leader>g :OpenGithubFile<CR>
-
-" CHADTree
-nnoremap <leader>v <cmd>CHADopen<CR>
 
 " Localvimrc
 " Stop asking me about local vimrc

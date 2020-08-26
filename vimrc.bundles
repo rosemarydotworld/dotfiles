@@ -40,6 +40,8 @@ Plug 'tyru/open-browser.vim'
 Plug 'tyru/open-browser-github.vim'
 " Use '%' for more stuff
 Plug 'andymass/vim-matchup'
+" Better incsearch
+Plug 'haya14busa/incsearch.vim'
 " Git gutter, essentially
 if has('nvim') || has('patch-8.0.902')
   Plug 'mhinz/vim-signify'
