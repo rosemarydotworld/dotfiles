@@ -29,7 +29,8 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme zendo
+let ayucolor="dark"
+colorscheme ayu
 
 filetype plugin indent on
 
@@ -106,7 +107,7 @@ au BufNewFile,BufRead *.p8 set filetype=lua
 
 " Lightline
 let g:lightline = {
-  \ 'colorscheme': 'zendo',
+  \ 'colorscheme': 'ayu',
   \ }
 
 " Incsearch

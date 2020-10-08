@@ -26,8 +26,11 @@ Plug 'sheerun/vim-polyglot'
 Plug 'lambdalisue/gina.vim'
 " Easier dismissal of buffers
 Plug 'moll/vim-bbye'
+" Visualize register contents
+Plug 'junegunn/vim-peekaboo'
 " Colorschemes
 Plug 'liamdanger/zendo'
+Plug 'ayu-theme/ayu-vim'
 " Use editorconfig on specific projects
 Plug 'editorconfig/editorconfig-vim'
 " Local editor rules (just for me)
@@ -48,5 +51,7 @@ if has('nvim') || has('patch-8.0.902')
 else
   Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
 endif
+" Minimap!
+Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 
 call plug#end()
