@@ -4,8 +4,12 @@ end
 
 call plug#begin()
 
-" All-purpose modal fuzzy finding
-Plug 'liuchengxu/vim-clap'
+" fzf is a general-purpose command-line fuzzy finder.
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Adds some features to fzf that are specific to vim.
+Plug 'junegunn/fzf.vim'
+" Git branches in fzf
+Plug 'stsewd/fzf-checkout.vim'
 " LSP support for linting, typing, suggestions, etc.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Status line
@@ -35,8 +39,6 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'editorconfig/editorconfig-vim'
 " Local editor rules (just for me)
 Plug 'embear/vim-localvimrc'
-" Python import sorting
-Plug 'fisadev/vim-isort'
 " Allow for dispatching my browser
 Plug 'tyru/open-browser.vim'
 " Open current file in github repo
@@ -51,7 +53,5 @@ if has('nvim') || has('patch-8.0.902')
 else
   Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
 endif
-" Minimap!
-Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 
 call plug#end()

@@ -44,6 +44,8 @@ alias oldvim='vi'
 # Nom
 alias nr="npm run"
 
+alias glp='git log --pretty="format:%Cred%h %Cblue%d %Cgreen%s %Creset%an %ar" --graph'
+
 eval $(thefuck --alias)
 
 # Include custom aliases

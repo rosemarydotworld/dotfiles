@@ -66,9 +66,6 @@ set number
 set splitbelow
 set splitright
 
-" Better escaping from terminals
-tnoremap <ESC><ESC> <C-\><C-n>
-
 " Buffers can stay 'open' if not in a window
 set hidden
 " Buffer switching is fast as hell
@@ -147,23 +144,19 @@ nnoremap <silent> <C-O>  :<C-u>CocList outline<cr>
 " Show all diagnostics
 nnoremap <silent> <C-A>  :<C-u>CocList diagnostics<cr>
 
-" Clap 👏
+" fzf
 " Fuzzy file search
-nnoremap <C-P> :Clap files<CR>
+nnoremap <C-P> :GFiles<CR>
 " Fuzzy buffer search
-nnoremap <C-B> :Clap buffers<CR>
-" Yank list
-nnoremap <C-Y> :Clap yanks<CR>
-" Grep!
-nnoremap <C-G> :Clap grep<CR>
-" Marks list
-nnoremap <C-M> :Clap marks<CR>
-" Bigger clap window
-let g:clap_layout = { 'relative': 'editor' }
-" Fun empty message
-let g:clap_no_matches_msg = 'no dice'
-" Insert only!
-let g:clap_insert_mode_only = v:true
+nnoremap <C-B> :Buffers<CR>
+" Project search
+nnoremap <C-G> :Rg<CR>
+" Git branches
+nnoremap <C-C> :GBranches<CR>
+" Escape to close
+tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
+" Pretty
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'highlight': 'Comment' } }
 
 " Open-Browser-Github
 let g:openbrowser_github_always_used_branch = 'master'
