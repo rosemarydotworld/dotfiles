@@ -32,6 +32,9 @@ endif
 let ayucolor="dark"
 colorscheme ayu
 
+" Lightline
+let g:lightline = { 'colorscheme': 'ayu' }
+
 filetype plugin indent on
 
 autocmd BufWritePre * %s/\s\+$//e
@@ -68,10 +71,8 @@ set splitright
 
 " Buffers can stay 'open' if not in a window
 set hidden
-" Buffer switching is fast as hell
-nnoremap <C-l> :bnext<CR>
-nnoremap <C-h> :bprev<CR>
 
+" Stop highlighting search!
 nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
 
 " FUN WITH LEADER COMMANDS
@@ -101,11 +102,6 @@ let g:html_indent_tags = 'li\|p'
 au BufNewFile,BufRead *.p8 set filetype=lua
 
 " PLUGIN STUFF
-
-" Lightline
-let g:lightline = {
-  \ 'colorscheme': 'ayu',
-  \ }
 
 " Incsearch
 " :h g:incsearch#auto_nohlsearch
