@@ -13,7 +13,7 @@ Plug 'stsewd/fzf-checkout.vim'
 " LSP support for linting, typing, suggestions, etc.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Status line
-Plug 'itchyny/lightline.vim'
+Plug 'datwaft/bubbly.nvim'
 " Comment stuff out
 Plug 'tpope/vim-commentary'
 " Allow some extra things to repeat with `.`

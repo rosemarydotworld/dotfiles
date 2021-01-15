@@ -33,7 +33,20 @@ let ayucolor="dark"
 colorscheme ayu
 
 " Lightline
-let g:lightline = { 'colorscheme': 'ayu' }
+let g:bubbly_palette = #{
+\   background: "#0F1419",
+\   foreground: "#E6E1CF",
+\   black: "#0F1419",
+\   red: "#FF3333",
+\   green: "#C2D94C",
+\   yellow: "#FFB454",
+\   blue: "#59C2FF",
+\   purple: "#D4BFFF",
+\   cyan: "#95E6CB",
+\   white: "#B3B1AD",
+\   lightgrey: "#626A73",
+\   darkgrey: "#4D5566",
+\ }
 
 filetype plugin indent on
 
