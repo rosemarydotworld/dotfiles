@@ -37,7 +37,7 @@ let g:bubbly_palette = #{
 \   background: "#0F1419",
 \   foreground: "#E6E1CF",
 \   black: "#0F1419",
-\   red: "#FF3333",
+\   red: "#F07178",
 \   green: "#C2D94C",
 \   yellow: "#FFB454",
 \   blue: "#59C2FF",
