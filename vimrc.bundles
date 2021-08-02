@@ -4,16 +4,24 @@ end
 
 call plug#begin()
 
-" fzf is a general-purpose command-line fuzzy finder.
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Adds some features to fzf that are specific to vim.
-Plug 'junegunn/fzf.vim'
-" Git branches in fzf
-Plug 'stsewd/fzf-checkout.vim'
-" LSP support for linting, typing, suggestions, etc.
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Status line
-Plug 'datwaft/bubbly.nvim'
+" Treesitter for better syntax parsing
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+" Lumpy Space Princess, I mean LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'glepnir/lspsaga.nvim'
+" Search everything
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+" Movement
+Plug 'phaazon/hop.nvim'
+" Statusline
+Plug 'hoob3rt/lualine.nvim'
+" Tab bar
+Plug 'akinsho/nvim-bufferline.lua'
+" Autocomplete
+Plug 'hrsh7th/nvim-compe'
 " Comment stuff out
 Plug 'tpope/vim-commentary'
 " Allow some extra things to repeat with `.`
@@ -34,7 +42,7 @@ Plug 'moll/vim-bbye'
 Plug 'junegunn/vim-peekaboo'
 " Colorschemes
 Plug 'liamdanger/zendo'
-Plug 'ayu-theme/ayu-vim'
+Plug 'folke/tokyonight.nvim'
 " Use editorconfig on specific projects
 Plug 'editorconfig/editorconfig-vim'
 " Local editor rules (just for me)
@@ -48,10 +56,6 @@ Plug 'andymass/vim-matchup'
 " Better incsearch
 Plug 'haya14busa/incsearch.vim'
 " Git gutter, essentially
-if has('nvim') || has('patch-8.0.902')
-  Plug 'mhinz/vim-signify'
-else
-  Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
-endif
+Plug 'lewis6991/gitsigns.nvim'
 
 call plug#end()
