@@ -24,9 +24,8 @@ endif
 syntax enable
 set termguicolors
 
-set background=dark
-colorscheme tokyonight
-let g:tokyonight_style="night"
+set background=light
+colorscheme ayu
 
 filetype plugin indent on
 
@@ -93,16 +92,11 @@ let g:html_indent_tags = 'li\|p'
 au BufNewFile,BufRead *.p8 set filetype=lua
 
 " PLUGIN STUFF
-
-" Statusline
-lua << EOF
-require('lualine').setup {
-  options = {
-    icons_enabled = 0,
-    theme = 'tokyonight',
-  }
-}
-EOF
+"
+" Lightline
+let g:lightline = {
+  \ 'colorscheme': 'ayu',
+  \ }
 
 " Motion
 lua << EOF
@@ -115,71 +109,18 @@ lua << EOF
 require('gitsigns').setup()
 EOF
 
-" Completion
+" Clip menu
 lua << EOF
-vim.o.completeopt = "menuone,noselect"
-
-require "compe".setup {
-  enabled = true,
-  autocomplete = true,
-  debug = false,
-  min_length = 1,
-  preselect = "enable",
-  throttle_time = 80,
-  source_timeout = 200,
-  incomplete_delay = 400,
-  max_abbr_width = 100,
-  max_kind_width = 100,
-  max_menu_width = 100,
-  documentation = true,
-  source = {
-    buffer = {kind = "﬘", true},
-    vsnip = {kind = "﬌"}, --replace to what sign you prefer
-    nvim_lsp = true
-  }
-}
-
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
-local check_back_space = function()
-  local col = vim.fn.col(".") - 1
-  if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-    return true
-  else
-    return false
-  end
-end
-
--- tab completion
-
-_G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return vim.fn["compe#complete"]()
-  end
-end
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-    return t "<Plug>(vsnip-jump-prev)"
-  else
-    return t "<S-Tab>"
-  end
-end
-
---  mappings
-
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+require('neoclip').setup({
+  history = 1000,
+  filter = nil,
+})
+require('telescope').load_extension('neoclip')
 EOF
+nnoremap <leader>p :Telescope neoclip<CR>
+
+" Completion
+let g:coq_settings = { 'auto_start': v:true }
 
 " Incsearch
 " :h g:incsearch#auto_nohlsearch
@@ -196,19 +137,6 @@ map g# <Plug>(incsearch-nohl-g#)
 " Close buffers quickly
 nnoremap <C-x> :Bdelete!<CR>
 
-" Barbar
-lua << EOF
-require("bufferline").setup {
-  options = {
-    diagnostics = "nvim_lsp",
-    show_buffer_icons = false,
-    buffer_close_icon = '×',
-  }
-}
-EOF
-nnoremap <silent><C-l> :BufferLineCycleNext<CR>
-nnoremap <silent><C-h> :BufferLineCyclePrev<CR>
-
 " Formatting
 nnoremap <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 
@@ -216,6 +144,7 @@ nnoremap <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 " Config
 lua << EOF
 local lspconf = require("lspconfig")
+local coq = require("coq")
 
 -- these langs require same lspconfig so put em all in a table and loop through!
 local servers = {"html", "cssls", "pyright"}
@@ -268,14 +197,14 @@ local function eslint_config_exists()
   return false
 end
 
-lspconf.tsserver.setup {
+lspconf.tsserver.setup(coq().lsp_ensure_capabilities({
   on_attach = function(client)
     if client.config.flags then
       client.config.flags.allow_incremental_sync = true
     end
     client.resolved_capabilities.document_formatting = false
   end
-}
+}))
 
 lspconf.efm.setup {
   on_attach = function(client)
