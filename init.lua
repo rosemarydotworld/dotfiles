@@ -104,7 +104,8 @@ require("packer").startup(function()
   use 'AckslD/nvim-neoclip.lua'
 
   -- Autocompletion
-  use "hrsh7th/nvim-compe"
+  use { 'ms-jpq/coq_nvim', branch = 'coq' }
+  use { 'ms-jpq/coq.artifacts', branch = 'artifacts'}
 
   -- Nice netrw
   use 'tpope/vim-vinegar'
@@ -148,6 +149,10 @@ map("n", "<leader>g", ":OpenGithubFile<cr>")
 
 -- LSP
 local lspconf = require("lspconfig")
+local coq = require("coq")
+
+g.coq_settings = { auto_start = true and 'shut-up' }
+vim.api.nvim_command('autocmd VimEnter * COQnow') -- no idea why I need this with the above
 
 -- these langs require same lspconfig so put em all in a table and loop through!
 local servers = {"html", "cssls", "pyright"}
@@ -200,14 +205,14 @@ local function eslint_config_exists()
   return false
 end
 
-lspconf.tsserver.setup({
+lspconf.tsserver.setup(coq().lsp_ensure_capabilities({
   on_attach = function(client)
     if client.config.flags then
       client.config.flags.allow_incremental_sync = true
     end
     client.resolved_capabilities.document_formatting = false
   end
-})
+}))
 
 lspconf.efm.setup {
   on_attach = function(client)
@@ -280,28 +285,6 @@ map("n", "<leader>t", "<cmd>TroubleToggle<cr>")
 
 -- Completion
 opt("o", "completeopt", "menu,menuone,noselect")
-
-require("compe").setup({
-  enabled = true,
-  autocomplete = true,
-  preselect = "enable",
-  throttle_time = 80,
-  source_timeout = 200,
-  incomplete_delay = 400,
-  allow_prefix_unmatch = false,
-  with_text = false,
-  source = {
-    path = true,
-    buffer = true,
-    calc = true,
-    ultisnips = true,
-    vsnip = false,
-    nvim_lsp = true,
-    nvim_lua = true,
-    spell = true,
-    tags = true,
-  },
-})
 
 -- Trouble
 require("trouble").setup()
