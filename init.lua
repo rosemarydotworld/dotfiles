@@ -32,6 +32,7 @@ opt("w", "number", true)
 opt("o", "showcmd", true)
 opt("o", "laststatus", 2)
 opt("o", "signcolumn", "yes")
+opt("o", "wrap", false)
 
 -- Window management:
 opt("o", "hidden", true)
@@ -152,7 +153,7 @@ local lspconf = require("lspconfig")
 local coq = require("coq")
 
 g.coq_settings = { auto_start = true and 'shut-up' }
-vim.api.nvim_command('autocmd VimEnter * COQnow') -- no idea why I need this with the above
+vim.api.nvim_command('autocmd VimEnter * COQnow --shut-up') -- no idea why I need this with the above
 
 -- these langs require same lspconfig so put em all in a table and loop through!
 local servers = {"html", "cssls", "pyright"}
