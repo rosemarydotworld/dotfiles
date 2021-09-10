@@ -78,7 +78,7 @@ require("packer").startup(function()
   use "neovim/nvim-lspconfig"
 
   -- Formatting
-  use 'mhartington/formatter.nvim'
+  use 'sbdchd/neoformat'
 
   -- Search and find
   use {
@@ -86,11 +86,15 @@ require("packer").startup(function()
     requires = { {'nvim-lua/plenary.nvim'} }
   }
 
-  -- Line!
+  -- Lines!
   use {
     'hoob3rt/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
+  use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+
+  -- Get rid of buffers easily
+  use 'famiu/bufdelete.nvim'
 
   -- Pair 'em up
   use "tpope/vim-endwise"
@@ -117,8 +121,14 @@ require("packer").startup(function()
   -- Use `S` to surround objects with e.g. quotes
   use 'tpope/vim-surround'
 
+  -- Simple tweak to highlighting and searching in file
+  use "rktjmp/highlight-current-n.nvim"
+
   -- Gitgutters
   use 'lewis6991/gitsigns.nvim'
+
+  -- Context
+  use 'romgrk/nvim-treesitter-context'
 
   -- Move!
   use 'phaazon/hop.nvim'
@@ -138,6 +148,8 @@ opt("o", "background", "dark")
 require("ayu")
 cmd("colorscheme ayu")
 
+-- Some mapping
+
 -- :Explore! It's good, actually
 map("", "<leader>e", ":Explore<cr>")
 
@@ -147,12 +159,19 @@ map("n", "<leader>vp", ":PackerInstall<cr>")
 
 -- Jump to file in github
 map("n", "<leader>g", ":OpenGithubFile<cr>")
+-- Last file
+map("n", "<leader><leader>", "<c-^>")
 
 -- LSP
 local lspconf = require("lspconfig")
 local coq = require("coq")
 
-g.coq_settings = { auto_start = true and 'shut-up' }
+g.coq_settings = { 
+  auto_start = true and 'shut-up', 
+  keymap = {
+    jump_to_mark = '',
+  }
+}
 vim.api.nvim_command('autocmd VimEnter * COQnow --shut-up') -- no idea why I need this with the above
 
 -- these langs require same lspconfig so put em all in a table and loop through!
@@ -255,31 +274,7 @@ map("n", "<C-j>", "<cmd>Lspsaga diagnostic_jump_next<cr>")
 map("n", "<C-k>", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
 
 -- Formatting
-require('formatter').setup({
-  filetype = {
-    javascript = {
-      -- prettier
-      function()
-        return {
-          exe = "prettier",
-          args = {"--stdin-filepath", fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'},
-          stdin = true
-        }
-      end
-    },
-    typescript = {
-      -- prettier
-      function()
-        return {
-          exe = "eslint_d",
-          args = {},
-          stdin = true
-        }
-      end
-    },
-  }
-})
-map("", "<leader>f", "<cmd>Format<cr>")
+map("", "<leader>f", "<cmd>Neoformat<cr>")
 
 -- Trouble!
 map("n", "<leader>t", "<cmd>TroubleToggle<cr>")
@@ -348,6 +343,16 @@ require("lualine").setup({
     lualine_z = {},
   },
 })
+require('bufferline').setup {
+  options = {
+    diagnostics = "nvim_lsp",
+  }
+}
+map("n", "gb", "<cmd>BufferLinePick<cr>")
+map("n", "<c-h>", "<cmd>BufferLineCyclePrev<cr>")
+map("n", "<c-l>", "<cmd>BufferLineCycleNext<cr>")
+map("n", "<c-x>", "<cmd>Bdelete<cr>")
+
 
 -- Neoclip
 require('neoclip').setup({
@@ -357,6 +362,12 @@ require('neoclip').setup({
 })
 require('telescope').load_extension('neoclip')
 map("n", "<leader>p", ":Telescope neoclip<cr>")
+
+-- Context
+require'treesitter-context'.setup{
+  enable = true,
+  throttle = true,
+}
 
 -- Gotta go fast
 require('hop').setup()
@@ -376,7 +387,18 @@ require('telescope').setup{
         ["<C-k>"] = actions.move_selection_previous,
       },
     },
-  }
+  },
+  pickers = {
+    buffers = {
+      show_all_buffers = true,
+      sort_lastused = true,
+      mappings = {
+        i = {
+          ["<c-x>"] = "delete_buffer",
+        }
+      }
+    },
+  },
 }
 map("", "<C-P>", "<cmd>Telescope find_files<cr>")
 map("", "<C-G>", "<cmd>Telescope live_grep<cr>")
