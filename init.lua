@@ -125,7 +125,15 @@ require("packer").startup(function()
   use "rktjmp/highlight-current-n.nvim"
 
   -- Gitgutters
-  use 'lewis6991/gitsigns.nvim'
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
 
   -- Context
   use 'romgrk/nvim-treesitter-context'
@@ -161,6 +169,9 @@ map("n", "<leader>vp", ":PackerInstall<cr>")
 map("n", "<leader>g", ":OpenGithubFile<cr>")
 -- Last file
 map("n", "<leader><leader>", "<c-^>")
+
+-- Clear search highlighting easily
+map("n", "<backspace>", ":noh<cr>")
 
 -- LSP
 local lspconf = require("lspconfig")
