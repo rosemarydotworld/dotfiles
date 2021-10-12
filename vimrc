@@ -24,7 +24,7 @@ endif
 syntax enable
 set termguicolors
 
-set background=light
+set background=dark
 colorscheme ayu
 
 filetype plugin indent on
