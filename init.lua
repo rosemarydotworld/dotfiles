@@ -75,7 +75,10 @@ require("packer").startup(function()
 
   -- Lumpy Space Princess
   use "glepnir/lspsaga.nvim"
-  use "neovim/nvim-lspconfig"
+  use {
+    'neovim/nvim-lspconfig',
+    'williamboman/nvim-lsp-installer',
+  }
 
   -- Formatting
   use 'sbdchd/neoformat'
@@ -185,15 +188,20 @@ g.coq_settings = {
 }
 vim.api.nvim_command('autocmd VimEnter * COQnow --shut-up') -- no idea why I need this with the above
 
--- these langs require same lspconfig so put em all in a table and loop through!
-local servers = {"html", "cssls", "pyright"}
+local lsp_installer = require("nvim-lsp-installer")
 
-for _, lang in ipairs(servers) do
-  lspconf[lang].setup {
-    on_attach = on_attach,
-    root_dir = vim.loop.cwd
-  }
-end
+lsp_installer.on_server_ready(function(server)
+    local opts = {}
+
+    -- (optional) Customize the options passed to the server
+    -- if server.name == "tsserver" then
+    --     opts.root_dir = function() ... end
+    -- end
+
+    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+    server:setup(opts)
+    vim.cmd [[ do User LspAttachBuffers ]]
+end)
 
 local saga = require 'lspsaga'
 
