@@ -194,9 +194,11 @@ lsp_installer.on_server_ready(function(server)
     local opts = {}
 
     -- (optional) Customize the options passed to the server
-    -- if server.name == "tsserver" then
-    --     opts.root_dir = function() ... end
-    -- end
+    if server.name == "eslint" then
+      opts.settings = {
+        run = "onSave"
+      }
+    end
 
     -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
     server:setup(opts)
@@ -218,32 +220,6 @@ saga.init_lsp_saga {
   },
 }
 
--- Linting
-local eslint = {
-  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
-  lintStdin = true,
-  lintFormats = {"%f:%l:%c: %m"},
-  lintIgnoreExitCode = true,
-  formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
-  formatStdin = true
-}
-
-local function eslint_config_exists()
-  local eslintrc = fn.glob(".eslintrc*", 0, 1)
-
-  if not vim.tbl_isempty(eslintrc) then
-    return true
-  end
-
-  if fn.filereadable("package.json") then
-    if fn.json_decode(fn.readfile("package.json"))["eslintConfig"] then
-      return true
-    end
-  end
-
-  return false
-end
-
 lspconf.tsserver.setup(coq().lsp_ensure_capabilities({
   on_attach = function(client)
     if client.config.flags then
@@ -252,37 +228,6 @@ lspconf.tsserver.setup(coq().lsp_ensure_capabilities({
     client.resolved_capabilities.document_formatting = false
   end
 }))
-
-lspconf.efm.setup {
-  on_attach = function(client)
-    client.resolved_capabilities.document_formatting = true
-    client.resolved_capabilities.goto_definition = false
-  end,
-  root_dir = function()
-    if not eslint_config_exists() then
-      return nil
-    end
-    return fn.getcwd()
-  end,
-  settings = {
-    languages = {
-      javascript = {eslint},
-      javascriptreact = {eslint},
-      ["javascript.jsx"] = {eslint},
-      typescript = {eslint},
-      ["typescript.tsx"] = {eslint},
-      typescriptreact = {eslint}
-    }
-  },
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescript.tsx",
-    "typescriptreact"
-  },
-}
 
 map("n", "gd", "<cmd>Lspsaga lsp_finder<cr>")
 map("n", "<leader>d", "<cmd>Lspsaga code_action<cr>")
@@ -293,7 +238,7 @@ map("n", "<C-j>", "<cmd>Lspsaga diagnostic_jump_next<cr>")
 map("n", "<C-k>", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
 
 -- Formatting
-map("", "<leader>f", "<cmd>Neoformat<cr>")
+map("", "<leader>f", "<cmd>EslintFixAll<cr>")
 
 -- Trouble!
 map("n", "<leader>t", "<cmd>TroubleToggle<cr>")
