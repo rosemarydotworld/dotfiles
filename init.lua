@@ -81,7 +81,7 @@ require("packer").startup(function()
   }
 
   -- Formatting
-  use 'sbdchd/neoformat'
+  use "lukas-reineke/format.nvim"
 
   -- Search and find
   use {
@@ -241,9 +241,6 @@ map("n", "gr", "<cmd>Lspsaga rename<cr>")
 map("n", "<C-j>", "<cmd>Lspsaga diagnostic_jump_next<cr>")
 map("n", "<C-k>", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
 
--- Formatting
-map("", "<leader>f", "<cmd>EslintFixAll<cr>")
-
 -- Trouble!
 map("n", "<leader>t", "<cmd>TroubleToggle<cr>")
 
@@ -252,6 +249,34 @@ opt("o", "completeopt", "menu,menuone,noselect")
 
 -- Trouble
 require("trouble").setup()
+
+-- Formatting
+require "format".setup {
+  ["*"] = {
+    {cmd = {"sed -i 's/[ \t]*$//'"}} -- remove trailing whitespace
+  },
+  vim = {
+    {
+      cmd = {"luafmt -w replace"},
+      start_pattern = "^lua << EOF$",
+      end_pattern = "^EOF$"
+    }
+  },
+  lua = {
+    {
+      cmd = {
+        function(file)
+          return string.format("luafmt -l %s -w replace %s", vim.bo.textwidth, file)
+        end
+      }
+    }
+  },
+  javascript = {
+    {cmd = {"eslint_d --stdin --fix-to-stdout"}}
+  },
+}
+map("", "<leader>f", "<cmd>FormatWrite<cr>")
+cmd [[ augroup Format | exe "au BufWritePost * FormatWrite" | augroup END ]]
 
 -- The line!
 local function clock()
