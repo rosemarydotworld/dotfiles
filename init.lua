@@ -71,10 +71,10 @@ require("packer").startup(function()
 
   -- Colorscheme!
   use "nvim-treesitter/nvim-treesitter"
-  use "Luxed/ayu-vim"
+  use "projekt0n/github-nvim-theme"
 
   -- Lumpy Space Princess
-  use "glepnir/lspsaga.nvim"
+  use "tami5/lspsaga.nvim"
   use {
     'neovim/nvim-lspconfig',
     'williamboman/nvim-lsp-installer',
@@ -99,17 +99,11 @@ require("packer").startup(function()
   -- Get rid of buffers easily
   use 'famiu/bufdelete.nvim'
 
-  -- Pair 'em up
-  use "tpope/vim-endwise"
-
   -- What's wrong??
   use({
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
   })
-
-  -- It's a clipmenu
-  use 'AckslD/nvim-neoclip.lua'
 
   -- Autocompletion
   use { 'ms-jpq/coq_nvim', branch = 'coq' }
@@ -121,8 +115,17 @@ require("packer").startup(function()
   use 'tpope/vim-commentary'
   -- Allow some extra things to repeat with `.`
   use 'tpope/vim-repeat'
-  -- Use `S` to surround objects with e.g. quotes
-  use 'tpope/vim-surround'
+
+  -- Surround
+  use {
+    "blackCauldron7/surround.nvim",
+    config = function()
+      require"surround".setup {mappings_style = "sandwich"}
+    end
+  }
+
+  -- Registers
+  use "tversteeg/registers.nvim"
 
   -- Simple tweak to highlighting and searching in file
   use "rktjmp/highlight-current-n.nvim"
@@ -155,9 +158,10 @@ end)
 if fn.has("termguicolors") == 1 then
   opt("o", "termguicolors", true)
 end
-opt("o", "background", "dark")
-require("ayu")
-cmd("colorscheme ayu")
+require('github-theme').setup({
+  theme_style = "dark_default",
+  function_style = "italic",
+})
 
 -- Some mapping
 
@@ -284,7 +288,7 @@ vim.cmd("autocmd User LspProgressUpdate let &ro = &ro")
 
 require("lualine").setup({
   options = {
-    theme = "ayu_dark",
+    theme = "github",
     icons_enabled = true,
     section_separators = { "", "" },
     component_separators = { "", "" },
@@ -293,18 +297,16 @@ require("lualine").setup({
   },
   sections = {
     lualine_a = { "mode" },
-    lualine_b = { "branch" },
+    lualine_b = { "branch", "diff" },
     lualine_c = { { "diagnostics", sources = { "nvim_lsp" } }, "filename" },
-    lualine_x = { "filetype", lsp_progress },
-    lualine_y = { clock },
+    lualine_x = {},
+    lualine_y = { "filetype", lsp_progress },
+    lualine_z = { clock },
   },
   inactive_sections = {
-    lualine_a = {},
+    lualine_a = { "filename", "diff" },
     lualine_b = {},
     lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = {},
   },
 })
 require('bufferline').setup {
@@ -316,16 +318,6 @@ map("n", "gb", "<cmd>BufferLinePick<cr>")
 map("n", "<c-h>", "<cmd>BufferLineCyclePrev<cr>")
 map("n", "<c-l>", "<cmd>BufferLineCycleNext<cr>")
 map("n", "<c-x>", "<cmd>Bdelete<cr>")
-
-
--- Neoclip
-require('neoclip').setup({
-  history = 1000,
-  filter = nil,
-  -- require'lspconfig'.tsserver.setup{}
-})
-require('telescope').load_extension('neoclip')
-map("n", "<leader>p", ":Telescope neoclip<cr>")
 
 -- Context
 require'treesitter-context'.setup{
