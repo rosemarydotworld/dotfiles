@@ -152,6 +152,9 @@ require("packer").startup(function()
   use 'tyru/open-browser.vim'
   -- Open current file in github repo
   use 'tyru/open-browser-github.vim'
+
+  -- Let's make a colorscheme
+  use 'rktjmp/lush.nvim'
 end)
 
 -- Theming
