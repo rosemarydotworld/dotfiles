@@ -304,6 +304,24 @@ require("formatter").setup(
             stdin = true
           }
         end
+      },
+      javascriptreact = {
+        function()
+          return {
+            exe = "eslint_d",
+            args = {"--stdin", "--fix-to-stdout", fn.fnameescape(vim.api.nvim_buf_get_name(0))},
+            stdin = true
+          }
+        end
+      },
+      typescriptreact = {
+        function()
+          return {
+            exe = "eslint_d",
+            args = {"--stdin", "--fix-to-stdout", fn.fnameescape(vim.api.nvim_buf_get_name(0))},
+            stdin = true
+          }
+        end
       }
     }
   }
