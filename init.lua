@@ -6,12 +6,13 @@
 -- Ok! Have fun!
 
 -- Utilities! Stolen from Jesse Atkinson, who in turn stole from Chris Kipp
+local api = vim.api
 local cmd = vim.cmd
 local fn = vim.fn
 local g = vim.g
 
 local function opt(scope, key, value)
-  local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
+  local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
   scopes[scope][key] = value
   if scope ~= "o" then
     scopes["o"][key] = value
@@ -19,11 +20,11 @@ local function opt(scope, key, value)
 end
 
 local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
+  local options = {noremap = true, silent = true}
   if opts then
     options = vim.tbl_extend("force", options, opts)
   end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 -- Let's set some basic options
@@ -65,106 +66,112 @@ opt("o", "emo", false)
 
 -- And now, plugins:
 cmd([[packadd packer.nvim]])
-require("packer").startup(function()
-  -- Packer can manage itself as an optional plugin.
-  use "wbthomason/packer.nvim"
+require("packer").startup(
+  function()
+    -- Packer can manage itself as an optional plugin.
+    use "wbthomason/packer.nvim"
 
-  -- Colorscheme!
-  use "nvim-treesitter/nvim-treesitter"
-  use "projekt0n/github-nvim-theme"
+    -- Colorscheme!
+    use "nvim-treesitter/nvim-treesitter"
+    use "projekt0n/github-nvim-theme"
 
-  -- Lumpy Space Princess
-  use "tami5/lspsaga.nvim"
-  use {
-    'neovim/nvim-lspconfig',
-    'williamboman/nvim-lsp-installer',
-  }
+    -- Lumpy Space Princess
+    use "tami5/lspsaga.nvim"
+    use {
+      "neovim/nvim-lspconfig",
+      "williamboman/nvim-lsp-installer"
+    }
 
-  -- Formatting
-  use "lukas-reineke/format.nvim"
+    -- Formatting
+    use "mhartington/formatter.nvim"
 
-  -- Search and find
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
-  }
+    -- Search and find
+    use {
+      "nvim-telescope/telescope.nvim",
+      requires = {{"nvim-lua/plenary.nvim"}}
+    }
 
-  -- Lines!
-  use {
-    'hoob3rt/lualine.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
-  }
-  use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+    -- Lines!
+    use {
+      "hoob3rt/lualine.nvim",
+      requires = {"kyazdani42/nvim-web-devicons", opt = true}
+    }
+    use {"akinsho/bufferline.nvim", requires = "kyazdani42/nvim-web-devicons"}
 
-  -- Get rid of buffers easily
-  use 'famiu/bufdelete.nvim'
+    -- Get rid of buffers easily
+    use "famiu/bufdelete.nvim"
 
-  -- What's wrong??
-  use({
-    "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons",
-  })
+    -- What's wrong??
+    use(
+      {
+        "folke/trouble.nvim",
+        requires = "kyazdani42/nvim-web-devicons"
+      }
+    )
 
-  -- Autocompletion
-  use { 'ms-jpq/coq_nvim', branch = 'coq' }
-  use { 'ms-jpq/coq.artifacts', branch = 'artifacts'}
+    -- Autocompletion
+    use {"ms-jpq/coq_nvim", branch = "coq"}
+    use {"ms-jpq/coq.artifacts", branch = "artifacts"}
 
-  -- Nice netrw
-  use 'tpope/vim-vinegar'
-  -- Comment stuff out
-  use 'tpope/vim-commentary'
-  -- Allow some extra things to repeat with `.`
-  use 'tpope/vim-repeat'
+    -- Nice netrw
+    use "tpope/vim-vinegar"
+    -- Comment stuff out
+    use "tpope/vim-commentary"
+    -- Allow some extra things to repeat with `.`
+    use "tpope/vim-repeat"
 
-  -- Surround
-  use {
-    "blackCauldron7/surround.nvim",
-    config = function()
-      require"surround".setup {mappings_style = "sandwich"}
-    end
-  }
+    -- Surround
+    use {
+      "blackCauldron7/surround.nvim",
+      config = function()
+        require "surround".setup {mappings_style = "sandwich"}
+      end
+    }
 
-  -- Registers
-  use "tversteeg/registers.nvim"
+    -- Registers
+    use "tversteeg/registers.nvim"
 
-  -- Simple tweak to highlighting and searching in file
-  use "rktjmp/highlight-current-n.nvim"
+    -- Simple tweak to highlighting and searching in file
+    use "rktjmp/highlight-current-n.nvim"
 
-  -- Gitgutters
-  use {
-    'lewis6991/gitsigns.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    },
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
+    -- Gitgutters
+    use {
+      "lewis6991/gitsigns.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim"
+      },
+      config = function()
+        require("gitsigns").setup()
+      end
+    }
 
-  -- Context
-  use 'romgrk/nvim-treesitter-context'
+    -- Context
+    use "romgrk/nvim-treesitter-context"
 
-  -- Move!
-  use 'phaazon/hop.nvim'
-  use 'chaoren/vim-wordmotion'
+    -- Move!
+    use "phaazon/hop.nvim"
+    use "chaoren/vim-wordmotion"
 
-  -- Allow for dispatching my browser
-  use 'tyru/open-browser.vim'
-  -- Open current file in github repo
-  use 'tyru/open-browser-github.vim'
+    -- Allow for dispatching my browser
+    use "tyru/open-browser.vim"
+    -- Open current file in github repo
+    use "tyru/open-browser-github.vim"
 
-  -- Let's make a colorscheme
-  use 'rktjmp/lush.nvim'
-end)
+    -- Let's make a colorscheme
+    use "rktjmp/lush.nvim"
+  end
+)
 
 -- Theming
 if fn.has("termguicolors") == 1 then
   opt("o", "termguicolors", true)
 end
-require('github-theme').setup({
-  theme_style = "dark_default",
-  function_style = "italic",
-})
+require("github-theme").setup(
+  {
+    theme_style = "dark_default",
+    function_style = "italic"
+  }
+)
 
 -- Some mapping
 
@@ -187,17 +194,18 @@ map("n", "<backspace>", ":noh<cr>")
 local lspconf = require("lspconfig")
 local coq = require("coq")
 
-g.coq_settings = { 
-  auto_start = true and 'shut-up', 
+g.coq_settings = {
+  auto_start = true and "shut-up",
   keymap = {
-    jump_to_mark = '',
+    jump_to_mark = ""
   }
 }
-vim.api.nvim_command('autocmd VimEnter * COQnow --shut-up') -- no idea why I need this with the above
+api.nvim_command("autocmd VimEnter * COQnow --shut-up") -- no idea why I need this with the above
 
 local lsp_installer = require("nvim-lsp-installer")
 
-lsp_installer.on_server_ready(function(server)
+lsp_installer.on_server_ready(
+  function(server)
     local opts = {}
 
     -- (optional) Customize the options passed to the server
@@ -210,31 +218,43 @@ lsp_installer.on_server_ready(function(server)
     -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
     server:setup(opts)
     vim.cmd [[ do User LspAttachBuffers ]]
-end)
+  end
+)
 
-local saga = require 'lspsaga'
+local saga = require "lspsaga"
 
 saga.init_lsp_saga {
   max_preview_lines = 24,
   finder_action_keys = {
-    open = '<CR>', vsplit = 'v', split = 's', quit = '<Esc>', scroll_down = '<Down>', scroll_up = '<Up>'
+    open = "<CR>",
+    vsplit = "v",
+    split = "s",
+    quit = "<Esc>",
+    scroll_down = "<Down>",
+    scroll_up = "<Up>"
   },
   code_action_keys = {
-    quit = '<Esc>', exec = '<CR>'
+    quit = "<Esc>",
+    exec = "<CR>"
   },
   rename_action_keys = {
-    quit = '<Esc>', exec = '<CR>'
-  },
+    quit = "<Esc>",
+    exec = "<CR>"
+  }
 }
 
-lspconf.tsserver.setup(coq().lsp_ensure_capabilities({
-  on_attach = function(client)
-    if client.config.flags then
-      client.config.flags.allow_incremental_sync = true
-    end
-    client.resolved_capabilities.document_formatting = false
-  end
-}))
+lspconf.tsserver.setup(
+  coq().lsp_ensure_capabilities(
+    {
+      on_attach = function(client)
+        if client.config.flags then
+          client.config.flags.allow_incremental_sync = true
+        end
+        client.resolved_capabilities.document_formatting = false
+      end
+    }
+  )
+)
 
 map("n", "gd", "<cmd>Lspsaga lsp_finder<cr>")
 map("n", "<leader>d", "<cmd>Lspsaga code_action<cr>")
@@ -254,32 +274,50 @@ opt("o", "completeopt", "menu,menuone,noselect")
 require("trouble").setup()
 
 -- Formatting
-require "format".setup {
-  ["*"] = {
-    {cmd = {"sed -i 's/[ \t]*$//'"}} -- remove trailing whitespace
-  },
-  vim = {
-    {
-      cmd = {"luafmt -w replace"},
-      start_pattern = "^lua << EOF$",
-      end_pattern = "^EOF$"
-    }
-  },
-  lua = {
-    {
-      cmd = {
-        function(file)
-          return string.format("luafmt -l %s -w replace %s", vim.bo.textwidth, file)
+require("formatter").setup(
+  {
+    filetype = {
+      lua = {
+        -- luafmt
+        function()
+          return {
+            exe = "luafmt",
+            args = {"--indent-count", 2, "--stdin"},
+            stdin = true
+          }
+        end
+      },
+      javascript = {
+        function()
+          return {
+            exe = "eslint_d",
+            args = {"--stdin", "--fix-to-stdout", fn.fnameescape(vim.api.nvim_buf_get_name(0))},
+            stdin = true
+          }
+        end
+      },
+      typescript = {
+        function()
+          return {
+            exe = "eslint_d",
+            args = {"--stdin", "--fix-to-stdout", fn.fnameescape(vim.api.nvim_buf_get_name(0))},
+            stdin = true
+          }
         end
       }
     }
-  },
-  javascript = {
-    {cmd = {"eslint_d --stdin --fix-to-stdout"}}
-  },
-}
-map("", "<leader>f", "<cmd>FormatWrite<cr>")
-cmd [[ augroup Format | exe "au BufWritePost * FormatWrite" | augroup END ]]
+  }
+)
+api.nvim_exec(
+  [[
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost *.ts,*.tsx,*.js,*.jsx,*.lua FormatWrite
+augroup END
+]],
+  true
+)
+map("n", "<leader>f", "<cmd>FormatWrite<cr>")
 
 -- The line!
 local function clock()
@@ -305,41 +343,43 @@ local function lsp_progress()
     "⠦",
     "⠧",
     "⠇",
-    "⠏",
+    "⠏"
   }
   local ms = vim.loop.hrtime() / 1000000
   local frame = math.floor(ms / 120) % #spinners
   return table.concat(status, " | ") .. " " .. spinners[frame + 1]
 end
 
-vim.cmd("autocmd User LspProgressUpdate let &ro = &ro")
+cmd("autocmd User LspProgressUpdate let &ro = &ro")
 
-require("lualine").setup({
+require("lualine").setup(
+  {
+    options = {
+      theme = "github",
+      icons_enabled = true,
+      section_separators = {"", ""},
+      component_separators = {"", ""}
+      -- section_separators = {"", ""},
+      -- component_separators = {"", ""}
+    },
+    sections = {
+      lualine_a = {"mode"},
+      lualine_b = {"branch", "diff"},
+      lualine_c = {{"diagnostics", sources = {"nvim_lsp"}}, "filename"},
+      lualine_x = {},
+      lualine_y = {"filetype", lsp_progress},
+      lualine_z = {clock}
+    },
+    inactive_sections = {
+      lualine_a = {"filename", "diff"},
+      lualine_b = {},
+      lualine_c = {}
+    }
+  }
+)
+require("bufferline").setup {
   options = {
-    theme = "github",
-    icons_enabled = true,
-    section_separators = { "", "" },
-    component_separators = { "", "" },
-    -- section_separators = {"", ""},
-    -- component_separators = {"", ""}
-  },
-  sections = {
-    lualine_a = { "mode" },
-    lualine_b = { "branch", "diff" },
-    lualine_c = { { "diagnostics", sources = { "nvim_lsp" } }, "filename" },
-    lualine_x = {},
-    lualine_y = { "filetype", lsp_progress },
-    lualine_z = { clock },
-  },
-  inactive_sections = {
-    lualine_a = { "filename", "diff" },
-    lualine_b = {},
-    lualine_c = {},
-  },
-})
-require('bufferline').setup {
-  options = {
-    diagnostics = "nvim_lsp",
+    diagnostics = "nvim_lsp"
   }
 }
 map("n", "gb", "<cmd>BufferLinePick<cr>")
@@ -348,29 +388,29 @@ map("n", "<c-l>", "<cmd>BufferLineCycleNext<cr>")
 map("n", "<c-x>", "<cmd>Bdelete<cr>")
 
 -- Context
-require'treesitter-context'.setup{
+require "treesitter-context".setup {
   enable = true,
-  throttle = true,
+  throttle = true
 }
 
 -- Gotta go fast
-require('hop').setup()
-map('n', '<Leader>s', "<cmd>lua require'hop'.hint_words()<cr>", {})
+require("hop").setup()
+map("n", "<Leader>s", "<cmd>lua require'hop'.hint_words()<cr>", {})
 
 -- More for telescope
-local actions = require('telescope.actions')
-require('telescope').setup{
+local actions = require("telescope.actions")
+require("telescope").setup {
   defaults = {
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-k>"] = actions.move_selection_previous
       },
       n = {
         ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-      },
-    },
+        ["<C-k>"] = actions.move_selection_previous
+      }
+    }
   },
   pickers = {
     buffers = {
@@ -378,11 +418,11 @@ require('telescope').setup{
       sort_lastused = true,
       mappings = {
         i = {
-          ["<c-x>"] = "delete_buffer",
+          ["<c-x>"] = "delete_buffer"
         }
       }
-    },
-  },
+    }
+  }
 }
 map("", "<C-P>", "<cmd>Telescope find_files<cr>")
 map("", "<C-G>", "<cmd>Telescope live_grep<cr>")
