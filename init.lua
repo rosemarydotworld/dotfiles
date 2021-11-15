@@ -34,6 +34,7 @@ opt("o", "showcmd", true)
 opt("o", "laststatus", 2)
 opt("o", "signcolumn", "yes")
 opt("o", "wrap", false)
+opt("o", "showmode", false)
 
 -- Window management:
 opt("o", "hidden", true)
