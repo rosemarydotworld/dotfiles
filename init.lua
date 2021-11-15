@@ -420,6 +420,7 @@ map("n", "<Leader>s", "<cmd>lua require'hop'.hint_words()<cr>", {})
 local actions = require("telescope.actions")
 require("telescope").setup {
   defaults = {
+    file_ignore_patterns = { "node_modules" },
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,
