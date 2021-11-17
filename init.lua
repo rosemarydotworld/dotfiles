@@ -210,11 +210,11 @@ lsp_installer.on_server_ready(
     local opts = {}
 
     -- (optional) Customize the options passed to the server
-    if server.name == "eslint" then
-      opts.settings = {
-        run = "onSave"
-      }
-    end
+    -- if server.name == "eslint" then
+    --   opts.settings = {
+    --     run = "onSave"
+    --   }
+    -- end
 
     -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
     server:setup(opts)
@@ -320,6 +320,15 @@ require("formatter").setup(
           return {
             exe = "eslint_d",
             args = {"--stdin", "--fix-to-stdout", fn.fnameescape(vim.api.nvim_buf_get_name(0))},
+            stdin = true
+          }
+        end
+      },
+      json = {
+        function()
+          return {
+            exe = "jq",
+            args = {"."},
             stdin = true
           }
         end
