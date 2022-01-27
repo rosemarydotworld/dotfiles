@@ -75,6 +75,7 @@ require("packer").startup(
     -- Colorscheme!
     use "nvim-treesitter/nvim-treesitter"
     use "projekt0n/github-nvim-theme"
+    use "folke/tokyonight.nvim"
 
     -- Lumpy Space Princess
     use "tami5/lspsaga.nvim"
@@ -146,9 +147,6 @@ require("packer").startup(
       end
     }
 
-    -- Context
-    use "romgrk/nvim-treesitter-context"
-
     -- Move!
     use "phaazon/hop.nvim"
     use "chaoren/vim-wordmotion"
@@ -167,12 +165,8 @@ require("packer").startup(
 if fn.has("termguicolors") == 1 then
   opt("o", "termguicolors", true)
 end
-require("github-theme").setup(
-  {
-    theme_style = "dark_default",
-    function_style = "italic"
-  }
-)
+cmd[[colorscheme tokyonight]]
+g.tokyonight_style = "night"
 
 -- Some mapping
 
@@ -383,7 +377,7 @@ cmd("autocmd User LspProgressUpdate let &ro = &ro")
 require("lualine").setup(
   {
     options = {
-      theme = "github",
+      theme = "tokyonight",
       icons_enabled = true,
       section_separators = {"", ""},
       component_separators = {"", ""}
@@ -393,7 +387,7 @@ require("lualine").setup(
     sections = {
       lualine_a = {"mode"},
       lualine_b = {"branch", "diff"},
-      lualine_c = {{"diagnostics", sources = {"nvim_lsp"}}, "filename"},
+      lualine_c = {{"diagnostics", sources = {"nvim_diagnostic"}}, "filename"},
       lualine_x = {},
       lualine_y = {"filetype", lsp_progress},
       lualine_z = {clock}
@@ -414,12 +408,6 @@ map("n", "gb", "<cmd>BufferLinePick<cr>")
 map("n", "<c-h>", "<cmd>BufferLineCyclePrev<cr>")
 map("n", "<c-l>", "<cmd>BufferLineCycleNext<cr>")
 map("n", "<c-x>", "<cmd>Bdelete<cr>")
-
--- Context
-require "treesitter-context".setup {
-  enable = true,
-  throttle = true
-}
 
 -- Gotta go fast
 require("hop").setup()
