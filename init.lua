@@ -83,9 +83,7 @@ require("packer").startup(
       "neovim/nvim-lspconfig",
       "williamboman/nvim-lsp-installer"
     }
-
-    -- Formatting
-    use "mhartington/formatter.nvim"
+    use "jose-elias-alvarez/null-ls.nvim"
 
     -- Search and find
     use {
@@ -238,6 +236,7 @@ saga.init_lsp_saga {
   }
 }
 
+require("null-ls").setup({
 lspconf.tsserver.setup(
   coq().lsp_ensure_capabilities(
     {
@@ -245,11 +244,21 @@ lspconf.tsserver.setup(
         if client.config.flags then
           client.config.flags.allow_incremental_sync = true
         end
-        client.resolved_capabilities.document_formatting = false
+
+        -- Formatting
+          if client.resolved_capabilities.document_formatting then
+            vim.cmd([[
+            augroup LspFormatting
+              autocmd! * <buffer>
+              autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+            augroup END
+            ]])
+          end
       end
     }
   )
 )
+})
 
 map("n", "gd", "<cmd>Lspsaga lsp_finder<cr>")
 map("n", "<leader>d", "<cmd>Lspsaga code_action<cr>")
@@ -267,79 +276,6 @@ opt("o", "completeopt", "menu,menuone,noselect")
 
 -- Trouble
 require("trouble").setup()
-
--- Formatting
-require("formatter").setup(
-  {
-    filetype = {
-      lua = {
-        -- luafmt
-        function()
-          return {
-            exe = "luafmt",
-            args = {"--indent-count", 2, "--stdin"},
-            stdin = true
-          }
-        end
-      },
-      javascript = {
-        function()
-          return {
-            exe = "eslint_d",
-            args = {"--stdin", "--fix-to-stdout", fn.fnameescape(vim.api.nvim_buf_get_name(0))},
-            stdin = true
-          }
-        end
-      },
-      typescript = {
-        function()
-          return {
-            exe = "eslint_d",
-            args = {"--stdin", "--fix-to-stdout", fn.fnameescape(vim.api.nvim_buf_get_name(0))},
-            stdin = true
-          }
-        end
-      },
-      javascriptreact = {
-        function()
-          return {
-            exe = "eslint_d",
-            args = {"--stdin", "--fix-to-stdout", fn.fnameescape(vim.api.nvim_buf_get_name(0))},
-            stdin = true
-          }
-        end
-      },
-      typescriptreact = {
-        function()
-          return {
-            exe = "eslint_d",
-            args = {"--stdin", "--fix-to-stdout", fn.fnameescape(vim.api.nvim_buf_get_name(0))},
-            stdin = true
-          }
-        end
-      },
-      json = {
-        function()
-          return {
-            exe = "jq",
-            args = {"."},
-            stdin = true
-          }
-        end
-      }
-    }
-  }
-)
-api.nvim_exec(
-  [[
-augroup FormatAutogroup
-  autocmd!
-  autocmd BufWritePost *.ts,*.tsx,*.js,*.jsx,*.lua FormatWrite
-augroup END
-]],
-  true
-)
-map("n", "<leader>f", "<cmd>FormatWrite<cr>")
 
 -- The line!
 local function clock()
