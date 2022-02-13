@@ -85,6 +85,9 @@ require("packer").startup(
     }
     use "jose-elias-alvarez/null-ls.nvim"
 
+    -- jinja specifically
+    use "lepture/vim-jinja"
+
     -- Search and find
     use {
       "nvim-telescope/telescope.nvim",
@@ -163,7 +166,7 @@ require("packer").startup(
 if fn.has("termguicolors") == 1 then
   opt("o", "termguicolors", true)
 end
-cmd[[colorscheme tokyonight]]
+cmd [[colorscheme tokyonight]]
 g.tokyonight_style = "night"
 
 -- Some mapping
@@ -353,7 +356,7 @@ map("n", "<Leader>s", "<cmd>lua require'hop'.hint_words()<cr>", {})
 local actions = require("telescope.actions")
 require("telescope").setup {
   defaults = {
-    file_ignore_patterns = { "node_modules" },
+    file_ignore_patterns = {"node_modules"},
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,
