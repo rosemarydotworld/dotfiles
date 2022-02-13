@@ -74,8 +74,10 @@ require("packer").startup(
 
     -- Colorscheme!
     use "nvim-treesitter/nvim-treesitter"
-    use "projekt0n/github-nvim-theme"
-    use "folke/tokyonight.nvim"
+    use({
+      'rose-pine/neovim',
+      as = 'rose-pine',
+    })
 
     -- Lumpy Space Princess
     use "tami5/lspsaga.nvim"
@@ -166,8 +168,7 @@ require("packer").startup(
 if fn.has("termguicolors") == 1 then
   opt("o", "termguicolors", true)
 end
-cmd [[colorscheme tokyonight]]
-g.tokyonight_style = "night"
+cmd [[colorscheme rose-pine]]
 
 -- Some mapping
 
@@ -316,7 +317,7 @@ cmd("autocmd User LspProgressUpdate let &ro = &ro")
 require("lualine").setup(
   {
     options = {
-      theme = "tokyonight",
+      theme = "rose-pine",
       icons_enabled = true,
       section_separators = {"", ""},
       component_separators = {"", ""}
