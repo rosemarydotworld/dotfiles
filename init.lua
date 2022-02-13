@@ -79,7 +79,7 @@ require("packer").startup(
       as = 'rose-pine',
     })
 
-    -- Lumpy Space Princess
+    -- Lumpy Space Princess, I mean Language Server Protocol
     use "tami5/lspsaga.nvim"
     use {
       "neovim/nvim-lspconfig",
@@ -87,7 +87,7 @@ require("packer").startup(
     }
     use "jose-elias-alvarez/null-ls.nvim"
 
-    -- jinja specifically
+    -- Jinja specifically for njk files in Eleventy, mostly
     use "lepture/vim-jinja"
 
     -- Search and find
@@ -125,13 +125,11 @@ require("packer").startup(
     -- Allow some extra things to repeat with `.`
     use "tpope/vim-repeat"
 
-    -- Surround
-    use {
-      "blackCauldron7/surround.nvim",
-      config = function()
-        require "surround".setup {mappings_style = "sandwich"}
-      end
-    }
+    -- Sandwiches! add, delete, or replace quotes, parens, etc.
+    use "machakann/vim-sandwich"
+
+    -- Automatically pair
+    use "steelsojka/pears.nvim"
 
     -- Registers
     use "tversteeg/registers.nvim"
@@ -277,6 +275,8 @@ map("n", "<leader>t", "<cmd>TroubleToggle<cr>")
 
 -- Completion
 opt("o", "completeopt", "menu,menuone,noselect")
+
+require "pears".setup()
 
 -- Trouble
 require("trouble").setup()
