@@ -12,19 +12,19 @@ local fn = vim.fn
 local g = vim.g
 
 local function opt(scope, key, value)
-  local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
-  scopes[scope][key] = value
-  if scope ~= "o" then
-    scopes["o"][key] = value
-  end
+	local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
+	scopes[scope][key] = value
+	if scope ~= "o" then
+		scopes["o"][key] = value
+	end
 end
 
 local function map(mode, lhs, rhs, opts)
-  local options = {noremap = true, silent = true}
-  if opts then
-    options = vim.tbl_extend("force", options, opts)
-  end
-  api.nvim_set_keymap(mode, lhs, rhs, options)
+	local options = { noremap = true, silent = true }
+	if opts then
+		options = vim.tbl_extend("force", options, opts)
+	end
+	api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 -- Let's set some basic options
@@ -67,94 +67,90 @@ opt("o", "emo", false)
 
 -- And now, plugins:
 cmd([[packadd packer.nvim]])
-require("packer").startup(
-  function()
-    -- Packer can manage itself as an optional plugin.
-    use "wbthomason/packer.nvim"
+require("packer").startup(function()
+	-- Packer can manage itself as an optional plugin.
+	use("wbthomason/packer.nvim")
 
-    -- Colorscheme!
-    use "nvim-treesitter/nvim-treesitter"
-    use({
-      'rose-pine/neovim',
-      as = 'rose-pine',
-    })
+	-- Colorscheme!
+	use("nvim-treesitter/nvim-treesitter")
+	use({
+		"rose-pine/neovim",
+		as = "rose-pine",
+	})
 
-    -- LSP
-    use 'neovim/nvim-lspconfig'
-    use "nvim-lua/lsp-status.nvim"
-    use "jose-elias-alvarez/null-ls.nvim"
-    -- Formatting
-    use "mhartington/formatter.nvim"
+	-- LSP
+	use("neovim/nvim-lspconfig")
+	use("nvim-lua/lsp-status.nvim")
+	use("jose-elias-alvarez/null-ls.nvim")
+	-- Formatting
+	use("mhartington/formatter.nvim")
 
-    -- Jinja specifically for njk files in Eleventy, mostly
-    use "lepture/vim-jinja"
+	-- Jinja specifically for njk files in Eleventy, mostly
+	use("lepture/vim-jinja")
 
-    -- Search and find
-    use {
-      "nvim-telescope/telescope.nvim",
-      requires = {{"nvim-lua/plenary.nvim"}}
-    }
+	-- Search and find
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = { { "nvim-lua/plenary.nvim" } },
+	})
 
-    -- Lines!
-    use {
-      "hoob3rt/lualine.nvim",
-      requires = {"kyazdani42/nvim-web-devicons", opt = true}
-    }
+	-- Lines!
+	use({
+		"hoob3rt/lualine.nvim",
+		requires = { "kyazdani42/nvim-web-devicons", opt = true },
+	})
 
-    -- Get rid of buffers easily
-    use "famiu/bufdelete.nvim"
+	-- Get rid of buffers easily
+	use("famiu/bufdelete.nvim")
 
-    -- What's wrong??
-    use(
-      {
-        "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons"
-      }
-    )
+	-- What's wrong??
+	use({
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+	})
 
-    -- Nice netrw
-    use "tpope/vim-vinegar"
-    -- Comment stuff out
-    use "tpope/vim-commentary"
-    -- Allow some extra things to repeat with `.`
-    use "tpope/vim-repeat"
+	-- Nice netrw
+	use("tpope/vim-vinegar")
+	-- Comment stuff out
+	use("tpope/vim-commentary")
+	-- Allow some extra things to repeat with `.`
+	use("tpope/vim-repeat")
 
-    -- Sandwiches! add, delete, or replace quotes, parens, etc.
-    use "machakann/vim-sandwich"
+	-- Sandwiches! add, delete, or replace quotes, parens, etc.
+	use("machakann/vim-sandwich")
 
-    -- Registers
-    use "tversteeg/registers.nvim"
+	-- Registers
+	use("tversteeg/registers.nvim")
 
-    -- Simple tweak to highlighting and searching in file
-    use "rktjmp/highlight-current-n.nvim"
+	-- Simple tweak to highlighting and searching in file
+	use("rktjmp/highlight-current-n.nvim")
 
-    -- Gitgutters
-    use {
-      "lewis6991/gitsigns.nvim",
-      requires = {
-        "nvim-lua/plenary.nvim"
-      },
-      config = function()
-        require("gitsigns").setup()
-      end
-    }
+	-- Gitgutters
+	use({
+		"lewis6991/gitsigns.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+		config = function()
+			require("gitsigns").setup()
+		end,
+	})
 
-    -- Move!
-    use "phaazon/hop.nvim"
-    use "chaoren/vim-wordmotion"
+	-- Move!
+	use("phaazon/hop.nvim")
+	use("chaoren/vim-wordmotion")
 
-    -- Allow for dispatching my browser
-    use "tyru/open-browser.vim"
-    -- Open current file in github repo
-    use "tyru/open-browser-github.vim"
-  end
-)
+	-- Allow for dispatching my browser
+	use("tyru/open-browser.vim")
+	-- Open current file in github repo
+	use("tyru/open-browser-github.vim")
+end)
 
 -- Theming
 if fn.has("termguicolors") == 1 then
-  opt("o", "termguicolors", true)
+	opt("o", "termguicolors", true)
 end
-cmd [[colorscheme rose-pine]]
+cmd([[colorscheme rose-pine]])
 
 -- Some mapping
 
@@ -180,7 +176,7 @@ g.netrw_fastbrowse = 0
 local lspconfig = require("lspconfig")
 local lsp_status = require("lsp-status")
 local null_ls = require("null-ls")
-local futil = require "formatter.util"
+local futil = require("formatter.util")
 
 -- Register this plugin that keeps track of progress messages.
 -- This is used by the status line to show a spinner while the LSP is working.
@@ -191,54 +187,50 @@ lsp_status.register_progress()
 -- Extra per-LSP settings are defined here, and they're merged with
 -- common_settings before configuring each LSP.
 local servers = {
-  tsserver = {
-    on_attach = function(client, bufnr)
-      lsp_status.on_attach(client, bufnr)
+	tsserver = {
+		on_attach = function(client, bufnr)
+			lsp_status.on_attach(client, bufnr)
 
-      -- Disable `tsservers`'s formatting capability so that null-ls
-      -- is registered as the only compatible formatter.
-      client.resolved_capabilities.document_formatting = false
-    end,
-  },
+			-- Disable `tsservers`'s formatting capability so that null-ls
+			-- is registered as the only compatible formatter.
+			client.resolved_capabilities.document_formatting = false
+		end,
+	},
 }
 
 -- Helper to conditionally register eslint handlers only if eslint is
 -- configured. If eslint is not configured for a project, it just fails.
 local function has_eslint_configured(utils)
-  return utils.root_has_file(".eslintrc.js")
+	return utils.root_has_file(".eslintrc.js")
 end
 
 local common_settings = {
-  on_attach = lsp_status.on_attach,
-  capabilities = lsp_status.capabilities,
+	on_attach = lsp_status.on_attach,
+	capabilities = lsp_status.capabilities,
 }
 
 -- Register all the LSP servers.
 for server, config in pairs(servers) do
-  -- Set default client capabilities plus window/workDoneProgress
-  config.capabilities = vim.tbl_extend(
-    "keep",
-    config.capabilities or {},
-    lsp_status.capabilities
-  )
+	-- Set default client capabilities plus window/workDoneProgress
+	config.capabilities = vim.tbl_extend("keep", config.capabilities or {}, lsp_status.capabilities)
 
-  -- Merge per-LSP configs with the common settings, and use that:
-  lspconfig[server].setup(vim.tbl_extend("keep", config, common_settings))
+	-- Merge per-LSP configs with the common settings, and use that:
+	lspconfig[server].setup(vim.tbl_extend("keep", config, common_settings))
 end
 
-require('formatter').setup {
-  filetype = {
-    lua = {
-      require('formatter.filetypes.lua').stylua,
-    },
-    typescript = {
-      require('formatter.defaults.eslint_d'),
-    },
-    typescriptreact = {
-      require('formatter.defaults.eslint_d'),
-    },
-  },
-}
+require("formatter").setup({
+	filetype = {
+		lua = {
+			require("formatter.filetypes.lua").stylua,
+		},
+		typescript = {
+			require("formatter.defaults.eslint_d"),
+		},
+		typescriptreact = {
+			require("formatter.defaults.eslint_d"),
+		},
+	},
+})
 
 map("n", "<leader>f", "<cmd>FormatWrite<cr>")
 
@@ -253,62 +245,60 @@ require("trouble").setup()
 
 -- The line!
 local function clock()
-  return " " .. os.date("%H:%M")
+	return " " .. os.date("%H:%M")
 end
 
 local function lsp_progress()
-  local messages = vim.lsp.util.get_progress_messages()
-  if #messages == 0 then
-    return
-  end
-  local status = {}
-  for _, msg in pairs(messages) do
-    table.insert(status, (msg.percentage or 0) .. "%% " .. (msg.title or ""))
-  end
-  local spinners = {
-    "⠋",
-    "⠙",
-    "⠹",
-    "⠸",
-    "⠼",
-    "⠴",
-    "⠦",
-    "⠧",
-    "⠇",
-    "⠏"
-  }
-  local ms = vim.loop.hrtime() / 1000000
-  local frame = math.floor(ms / 120) % #spinners
-  return table.concat(status, " | ") .. " " .. spinners[frame + 1]
+	local messages = vim.lsp.util.get_progress_messages()
+	if #messages == 0 then
+		return
+	end
+	local status = {}
+	for _, msg in pairs(messages) do
+		table.insert(status, (msg.percentage or 0) .. "%% " .. (msg.title or ""))
+	end
+	local spinners = {
+		"⠋",
+		"⠙",
+		"⠹",
+		"⠸",
+		"⠼",
+		"⠴",
+		"⠦",
+		"⠧",
+		"⠇",
+		"⠏",
+	}
+	local ms = vim.loop.hrtime() / 1000000
+	local frame = math.floor(ms / 120) % #spinners
+	return table.concat(status, " | ") .. " " .. spinners[frame + 1]
 end
 
 cmd("autocmd User LspProgressUpdate let &ro = &ro")
 
-require("lualine").setup(
-  {
-    options = {
-      theme = "rose-pine",
-      icons_enabled = true,
-      section_separators = {"", ""},
-      component_separators = {"", ""}
-      -- section_separators = {"", ""},
-      -- component_separators = {"", ""}
-    },
-    sections = {
-      lualine_a = {"mode"},
-      lualine_b = {"branch", "diff"},
-      lualine_c = {{"diagnostics", sources = {"nvim_diagnostic"}}, "filename"},
-      lualine_x = {},
-      lualine_y = {"filetype", lsp_progress},
-      lualine_z = {clock}
-    },
-    inactive_sections = {
-      lualine_a = {"filename", "diff"},
-      lualine_b = {},
-      lualine_c = {}
-    }
-  }
-)
+require("lualine").setup({
+	options = {
+		theme = "rose-pine",
+		icons_enabled = true,
+		section_separators = { "", "" },
+		component_separators = { "", "" },
+		-- section_separators = {"", ""},
+		-- component_separators = {"", ""}
+	},
+	sections = {
+		lualine_a = { "mode" },
+		lualine_b = { "branch", "diff" },
+		lualine_c = { { "diagnostics", sources = { "nvim_diagnostic" } }, "filename" },
+		lualine_x = {},
+		lualine_y = { "filetype", lsp_progress },
+		lualine_z = { clock },
+	},
+	inactive_sections = {
+		lualine_a = { "filename", "diff" },
+		lualine_b = {},
+		lualine_c = {},
+	},
+})
 map("n", "<c-x>", "<cmd>Bdelete<cr>")
 
 -- Gotta go fast
@@ -317,32 +307,32 @@ map("n", "<Leader>s", "<cmd>lua require'hop'.hint_words()<cr>", {})
 
 -- More for telescope
 local actions = require("telescope.actions")
-require("telescope").setup {
-  defaults = {
-    file_ignore_patterns = {"node_modules"},
-    mappings = {
-      i = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous
-      },
-      n = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous
-      }
-    }
-  },
-  pickers = {
-    buffers = {
-      show_all_buffers = true,
-      sort_lastused = true,
-      mappings = {
-        i = {
-          ["<c-x>"] = "delete_buffer"
-        }
-      }
-    }
-  }
-}
+require("telescope").setup({
+	defaults = {
+		file_ignore_patterns = { "node_modules" },
+		mappings = {
+			i = {
+				["<C-j>"] = actions.move_selection_next,
+				["<C-k>"] = actions.move_selection_previous,
+			},
+			n = {
+				["<C-j>"] = actions.move_selection_next,
+				["<C-k>"] = actions.move_selection_previous,
+			},
+		},
+	},
+	pickers = {
+		buffers = {
+			show_all_buffers = true,
+			sort_lastused = true,
+			mappings = {
+				i = {
+					["<c-x>"] = "delete_buffer",
+				},
+			},
+		},
+	},
+})
 map("", "<C-P>", "<cmd>Telescope find_files<cr>")
 map("", "<C-G>", "<cmd>Telescope live_grep<cr>")
 map("", "<C-B>", "<cmd>Telescope buffers<cr>")
