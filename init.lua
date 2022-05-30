@@ -79,13 +79,12 @@ require("packer").startup(
       as = 'rose-pine',
     })
 
-    -- Lumpy Space Princess, I mean Language Server Protocol
-    use "tami5/lspsaga.nvim"
-    use {
-      "neovim/nvim-lspconfig",
-      "williamboman/nvim-lsp-installer"
-    }
+    -- LSP
+    use 'neovim/nvim-lspconfig'
+    use "nvim-lua/lsp-status.nvim"
     use "jose-elias-alvarez/null-ls.nvim"
+    -- Formatting
+    use "mhartington/formatter.nvim"
 
     -- Jinja specifically for njk files in Eleventy, mostly
     use "lepture/vim-jinja"
@@ -101,7 +100,6 @@ require("packer").startup(
       "hoob3rt/lualine.nvim",
       requires = {"kyazdani42/nvim-web-devicons", opt = true}
     }
-    use {"akinsho/bufferline.nvim", requires = "kyazdani42/nvim-web-devicons"}
 
     -- Get rid of buffers easily
     use "famiu/bufdelete.nvim"
@@ -114,10 +112,6 @@ require("packer").startup(
       }
     )
 
-    -- Autocompletion
-    use {"ms-jpq/coq_nvim", branch = "coq"}
-    use {"ms-jpq/coq.artifacts", branch = "artifacts"}
-
     -- Nice netrw
     use "tpope/vim-vinegar"
     -- Comment stuff out
@@ -127,9 +121,6 @@ require("packer").startup(
 
     -- Sandwiches! add, delete, or replace quotes, parens, etc.
     use "machakann/vim-sandwich"
-
-    -- Automatically pair
-    use "steelsojka/pears.nvim"
 
     -- Registers
     use "tversteeg/registers.nvim"
@@ -156,9 +147,6 @@ require("packer").startup(
     use "tyru/open-browser.vim"
     -- Open current file in github repo
     use "tyru/open-browser-github.vim"
-
-    -- Let's make a colorscheme
-    use "rktjmp/lush.nvim"
   end
 )
 
@@ -185,98 +173,80 @@ map("n", "<leader><leader>", "<c-^>")
 -- Clear search highlighting easily
 map("n", "<backspace>", ":noh<cr>")
 
+-- netrw is ephemeral
+g.netrw_fastbrowse = 0
+
 -- LSP
-local lspconf = require("lspconfig")
-local coq = require("coq")
+local lspconfig = require("lspconfig")
+local lsp_status = require("lsp-status")
+local null_ls = require("null-ls")
+local futil = require "formatter.util"
 
-g.coq_settings = {
-  auto_start = true and "shut-up",
-  keymap = {
-    jump_to_mark = ""
-  }
-}
-api.nvim_command("autocmd VimEnter * COQnow --shut-up") -- no idea why I need this with the above
+-- Register this plugin that keeps track of progress messages.
+-- This is used by the status line to show a spinner while the LSP is working.
+lsp_status.register_progress()
 
-local lsp_installer = require("nvim-lsp-installer")
+-- Define all enabled LSPs.
+--
+-- Extra per-LSP settings are defined here, and they're merged with
+-- common_settings before configuring each LSP.
+local servers = {
+  tsserver = {
+    on_attach = function(client, bufnr)
+      lsp_status.on_attach(client, bufnr)
 
-lsp_installer.on_server_ready(
-  function(server)
-    local opts = {}
-
-    -- (optional) Customize the options passed to the server
-    -- if server.name == "eslint" then
-    --   opts.settings = {
-    --     run = "onSave"
-    --   }
-    -- end
-
-    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
-    server:setup(opts)
-    vim.cmd [[ do User LspAttachBuffers ]]
-  end
-)
-
-local saga = require "lspsaga"
-
-saga.init_lsp_saga {
-  max_preview_lines = 24,
-  finder_action_keys = {
-    open = "<CR>",
-    vsplit = "v",
-    split = "s",
-    quit = "<Esc>",
-    scroll_down = "<Down>",
-    scroll_up = "<Up>"
+      -- Disable `tsservers`'s formatting capability so that null-ls
+      -- is registered as the only compatible formatter.
+      client.resolved_capabilities.document_formatting = false
+    end,
   },
-  code_action_keys = {
-    quit = "<Esc>",
-    exec = "<CR>"
-  },
-  rename_action_keys = {
-    quit = "<Esc>",
-    exec = "<CR>"
-  }
 }
 
-require("null-ls").setup({
-lspconf.tsserver.setup(
-  coq().lsp_ensure_capabilities(
-    {
-      on_attach = function(client)
-        if client.config.flags then
-          client.config.flags.allow_incremental_sync = true
-        end
+-- Helper to conditionally register eslint handlers only if eslint is
+-- configured. If eslint is not configured for a project, it just fails.
+local function has_eslint_configured(utils)
+  return utils.root_has_file(".eslintrc.js")
+end
 
-        -- Formatting
-          if client.resolved_capabilities.document_formatting then
-            vim.cmd([[
-            augroup LspFormatting
-              autocmd! * <buffer>
-              autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
-            augroup END
-            ]])
-          end
-      end
-    }
+local common_settings = {
+  on_attach = lsp_status.on_attach,
+  capabilities = lsp_status.capabilities,
+}
+
+-- Register all the LSP servers.
+for server, config in pairs(servers) do
+  -- Set default client capabilities plus window/workDoneProgress
+  config.capabilities = vim.tbl_extend(
+    "keep",
+    config.capabilities or {},
+    lsp_status.capabilities
   )
-)
-})
 
-map("n", "gd", "<cmd>Lspsaga lsp_finder<cr>")
-map("n", "<leader>d", "<cmd>Lspsaga code_action<cr>")
-map("n", "K", "<cmd>Lspsaga hover_doc<cr>")
-map("n", "<leader>h", "<cmd>Lspsaga signature_help<cr>")
-map("n", "gr", "<cmd>Lspsaga rename<cr>")
-map("n", "<C-j>", "<cmd>Lspsaga diagnostic_jump_next<cr>")
-map("n", "<C-k>", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
+  -- Merge per-LSP configs with the common settings, and use that:
+  lspconfig[server].setup(vim.tbl_extend("keep", config, common_settings))
+end
+
+require('formatter').setup {
+  filetype = {
+    lua = {
+      require('formatter.filetypes.lua').stylua,
+    },
+    typescript = {
+      require('formatter.defaults.eslint_d'),
+    },
+    typescriptreact = {
+      require('formatter.defaults.eslint_d'),
+    },
+  },
+}
+
+map("n", "<leader>f", "<cmd>FormatWrite<cr>")
 
 -- Trouble!
 map("n", "<leader>t", "<cmd>TroubleToggle<cr>")
 
 -- Completion
 opt("o", "completeopt", "menu,menuone,noselect")
-
-require "pears".setup()
 
 -- Trouble
 require("trouble").setup()
@@ -339,14 +309,6 @@ require("lualine").setup(
     }
   }
 )
-require("bufferline").setup {
-  options = {
-    diagnostics = "nvim_lsp"
-  }
-}
-map("n", "gb", "<cmd>BufferLinePick<cr>")
-map("n", "<c-h>", "<cmd>BufferLineCyclePrev<cr>")
-map("n", "<c-l>", "<cmd>BufferLineCycleNext<cr>")
 map("n", "<c-x>", "<cmd>Bdelete<cr>")
 
 -- Gotta go fast
